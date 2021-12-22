@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Maréu</string>
+    <string name="fab_content_description">Add a meeting</string>
+</resources>
