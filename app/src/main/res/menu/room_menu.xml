@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/item_room1"
+            android:title="Salle A" />
+        <item
+            android:id="@+id/item_room2"
+            android:title="Salle B" />
+        <item
+            android:id="@+id/item_room3"
+            android:title="Salle C" />
+        <item
+            android:id="@+id/item_room4"
+            android:title="Salle D" />
+        <item
+            android:id="@+id/item_room5"
+            android:title="Salle E" />
+        <item
+            android:id="@+id/item_room6"
+            android:title="Salle F" />
+        <item
+            android:id="@+id/item_room7"
+            android:title="Salle G" />
+        <item
+            android:id="@+id/item_room8"
+            android:title="Salle H" />
+        <item
+            android:id="@+id/item_room9"
+            android:title="Salle I" />
+        <item
+            android:id="@+id/item_room10"
+            android:title="Salle J" />
+</menu>

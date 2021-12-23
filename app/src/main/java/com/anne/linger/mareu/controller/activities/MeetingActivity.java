@@ -1,52 +1,53 @@
 package com.anne.linger.mareu.controller.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.view.Menu;
 import android.view.View;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.databinding.ActivityMeetingBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import butterknife.OnClick;
 
 public class MeetingActivity extends AppCompatActivity {
 
     private ActivityMeetingBinding mBinding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initUi();
+        initData();
+        addMeeting();
+    }
 
     //Configure the UI
     private void initUi() {
         mBinding = ActivityMeetingBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
+        configureToolbar();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initUi();
-        configureToolbar();
-        addMeeting();
+    //Init the date
+    private void initData() {
+
     }
 
     //Configure the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds item to the action bar if it is present
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.filter_menu, menu);
         return true;
     }
 
     //Configure the Toolbar
     private void configureToolbar(){
         setSupportActionBar(mBinding.tbMain);
-        mBinding.tbMain.inflateMenu(R.menu.menu);
+        mBinding.tbMain.inflateMenu(R.menu.filter_menu);
     }
 
     //Navigate to the AddMeetingActivity
