@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Maréu</string>
     <string name="fab_content_description">Add a meeting</string>
+    <string name="add_meeting">Créer une réunion</string>
+    <string name="create">Créer</string>
+    <string name="date_format">JJ/MM/AAAA</string>
+    <string name="hour_format">00:00</string>
+    <string name="meeting_topic">Sujet</string>
+    <string name="room">Salle</string>
+    <string name="collaborators">Participants</string>
+    <string name="date_error">Erreur : veuillez entrer une date au format JJ/MM/AAAA</string>
 </resources>
