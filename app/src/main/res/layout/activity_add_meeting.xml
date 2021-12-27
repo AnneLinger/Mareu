@@ -42,7 +42,6 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
             app:startIconDrawable="@drawable/ic_baseline_calendar_month_24"
-            app:startIconCheckable="true"
             app:startIconContentDescription="Calendrier"
             app:startIconTint="@color/blue"
             android:background="@color/lightgrey"
@@ -70,7 +69,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tf_date"
             app:layout_constraintStart_toEndOf="@id/tf_date"
-            app:startIconCheckable="true"
             app:startIconContentDescription="Horloge"
             app:startIconDrawable="@drawable/ic_baseline_access_time_24"
             app:startIconTint="@color/blue">

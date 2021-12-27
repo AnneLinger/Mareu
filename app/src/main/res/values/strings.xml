@@ -9,4 +9,5 @@
     <string name="room">Salle</string>
     <string name="collaborators">Participants</string>
     <string name="date_error">Erreur : veuillez entrer une date au format JJ/MM/AAAA</string>
+    <string name="hyphen">-</string>
 </resources>

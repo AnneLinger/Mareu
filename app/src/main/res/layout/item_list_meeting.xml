@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/vertical_margin"
+    >
+
+    <ImageView
+        android:id="@+id/im_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="60dp"
+        style="@style/ItemRecyclerView"
+        tools:text="@string/app_name"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_first_hyphen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_name"
+        android:layout_marginLeft="4dp"
+        style="@style/ItemRecyclerView"
+        android:text="@string/hyphen"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_first_hyphen"
+        android:layout_marginLeft="4dp"
+        style="@style/ItemRecyclerView"
+        tools:text="@string/app_name"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_second_hyphen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_start_time"
+        android:layout_marginLeft="4dp"
+        style="@style/ItemRecyclerView"
+        android:text="@string/hyphen"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_second_hyphen"
+        android:layout_marginLeft="4dp"
+        style="@style/ItemRecyclerView"
+        tools:text="@string/app_name"
+        >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/im_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+    </ImageView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_collaborators"
+        android:name="com.openclassrooms.entrevoisins.controller.activities.MeetingActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/im_delete"
+        android:layout_marginLeft="60dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".controller.activities.MeetingActivity"
+        tools:listitem="@layout/item_list_collaborators" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

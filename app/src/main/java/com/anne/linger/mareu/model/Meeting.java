@@ -9,7 +9,7 @@ import java.util.List;
 *Created by Anne Linger on 20/12/2021.
 */
 public class Meeting {
-    private int id;
+    private String name;
     private Room room;
     private LocalDateTime date;
     private String startTime;
@@ -17,22 +17,21 @@ public class Meeting {
     private String topic;
     private List<String> collaborators;
 
-    public Meeting(int id, Room room, LocalDateTime date, String startTime, String endTime, String topic, List<String> collaborators) {
-        this.id = id;
+    public Meeting(String name, Room room, String startTime, String endTime, String topic, List<String> collaborators) {
+        this.name = name;
         this.room = room;
-        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.topic = topic;
         this.collaborators = collaborators;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Room getRoom() {

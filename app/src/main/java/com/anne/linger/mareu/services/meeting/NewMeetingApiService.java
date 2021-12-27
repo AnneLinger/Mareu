@@ -32,4 +32,5 @@ public class NewMeetingApiService implements MeetingApiService {
     public List<String> getCollaboratorList() {
         return collaboratorList;
     }
+
 }
