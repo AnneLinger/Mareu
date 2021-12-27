@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_view"
@@ -93,12 +94,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_collaborators"
         android:name="com.openclassrooms.entrevoisins.controller.activities.MeetingActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/im_delete"
-        android:layout_marginLeft="60dp"
+        android:layout_marginHorizontal="60dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".controller.activities.MeetingActivity"
         tools:listitem="@layout/item_list_collaborators" />

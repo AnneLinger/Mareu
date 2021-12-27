@@ -1,5 +1,6 @@
 package com.anne.linger.mareu.controller.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,10 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anne.linger.mareu.R;
+import com.anne.linger.mareu.di.DI;
 import com.anne.linger.mareu.model.Meeting;
+import com.anne.linger.mareu.services.meeting.MeetingApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,9 @@ import java.util.List;
 public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.ViewHolder>{
 
     private final List<Meeting> mMeetings;
+    private static final MeetingApiService mApiService = DI.getMeetingApiService();
+    private static List<String> mCollaboratorList;
+    private Context mContext;
 
     public ListMeetingAdapter(List<Meeting> meetings) {
         mMeetings = meetings;
@@ -37,6 +44,10 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.displayMeeting(mMeetings.get(position));
+        mCollaboratorList = mApiService.getCollaboratorList();
+        holder.collaborators.setAdapter(new ListCollaboratorAdapter(mCollaboratorList));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        holder.collaborators.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -63,7 +74,6 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
             name.setText(meeting.getName());
             startTime.setText(meeting.getStartTime());
             topic.setText(meeting.getTopic());
-            //collaborators.setAdapter(meeting.getCollaborators().toString());
         }
     }
 }
