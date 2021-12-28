@@ -8,51 +8,49 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_add"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue"
         android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/ToolbarAddTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:title="@string/add_meeting"
-        app:titleTextColor="@color/white"
         app:titleTextAppearance="@style/ActionBar.Text"
-        android:theme="@style/ToolbarAddTheme"/>
+        app:titleTextColor="@color/white" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tb_add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/button_rooms"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
         android:layout_marginVertical="32dp"
-        android:layout_marginHorizontal="@dimen/horizontal_margin">
+        app:layout_constraintBottom_toTopOf="@id/button_rooms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tb_add">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_date"
             android:layout_width="188dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/tf_hour"
-            app:layout_constraintEnd_toStartOf="@id/tf_hour"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
-            app:startIconDrawable="@drawable/ic_baseline_calendar_month_24"
-            app:startIconContentDescription="Calendrier"
-            app:startIconTint="@color/blue"
             android:background="@color/lightgrey"
-            app:errorEnabled="false"
             android:hint="JJ/MM/AAAA"
-            >
+            app:errorEnabled="false"
+            app:layout_constraintEnd_toStartOf="@id/tf_hour"
+            app:layout_constraintRight_toLeftOf="@id/tf_hour"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconContentDescription="Calendrier"
+            app:startIconDrawable="@drawable/ic_baseline_calendar_month_24"
+            app:startIconTint="@color/blue">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,10 +63,10 @@
             android:background="@color/lightgrey"
             android:hint="00:00"
             app:errorEnabled="false"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tf_date"
             app:layout_constraintStart_toEndOf="@id/tf_date"
+            app:layout_constraintTop_toTopOf="parent"
             app:startIconContentDescription="Horloge"
             app:startIconDrawable="@drawable/ic_baseline_access_time_24"
             app:startIconTint="@color/blue">
@@ -79,57 +77,57 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/button_rooms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cl_time"
-        app:layout_constraintBottom_toTopOf="@+id/button_collaborators"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
         android:layout_marginVertical="@dimen/vertical_margin"
-        android:text="@string/room"
-        android:textSize="18sp"
+        android:background="@color/lightgrey"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:drawableTint="@color/blue"
-        android:background="@color/lightgrey" />
+        android:text="@string/room"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_collaborators"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_time" />
 
     <Button
         android:id="@+id/button_collaborators"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/button_rooms"
-        app:layout_constraintBottom_toTopOf="@+id/tf_topic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"        android:text="@string/collaborators"
-        android:textSize="18sp"
+        android:layout_marginVertical="@dimen/vertical_margin"
+        android:background="@color/lightgrey"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
         android:drawableTint="@color/blue"
-        android:background="@color/lightgrey" />
+        android:text="@string/collaborators"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tf_topic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_rooms" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_topic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/button_collaborators"
-        app:layout_constraintBottom_toTopOf="@+id/button_save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"        android:background="@color/lightgrey"
-        android:hint="Sujet de la réunion"
-        android:inputType="text"
-        >
-
-    <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:layout_marginVertical="@dimen/vertical_margin"
+        android:background="@color/lightgrey"
+        android:hint="Sujet de la réunion"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/button_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_collaborators">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,15 +136,16 @@
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tf_topic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"           android:backgroundTint="@color/red"
+        android:layout_marginVertical="@dimen/vertical_margin"
+        android:backgroundTint="@color/red"
         android:text="Enregistrer"
+        android:textColor="@color/white"
         android:textSize="18sp"
-        android:textColor="@color/white" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tf_topic" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

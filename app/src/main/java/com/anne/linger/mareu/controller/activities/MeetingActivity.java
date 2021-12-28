@@ -65,7 +65,7 @@ public class MeetingActivity extends AppCompatActivity {
     }
 
     //Init the list of meetings
-    private void initList() {
+    public static void initList() {
         //Recover the neighbour list or the favorite neighbours
         mMeetingList = mApiService.getMeetingList();
         //Items of the RecyclerView filled with mNeighbourList
