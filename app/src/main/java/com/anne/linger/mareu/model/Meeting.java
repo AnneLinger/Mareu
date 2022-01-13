@@ -14,16 +14,16 @@ public class Meeting {
     private LocalDateTime date;
     private String startTime;
     private String endTime;
-    private String topic;
     private List<String> collaborators;
+    private String topic;
 
-    public Meeting(String name, Room room, String startTime, String endTime, String topic, List<String> collaborators) {
+    public Meeting(String name, Room room, String startTime, String endTime, List<String> collaborators, String topic) {
         this.name = name;
         this.room = room;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.topic = topic;
         this.collaborators = collaborators;
+        this.topic = topic;
     }
 
     public String getName() {
@@ -66,19 +66,18 @@ public class Meeting {
         this.endTime = endTime;
     }
 
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
     public List<String> getCollaborators() {
         return collaborators;
     }
 
     public void setCollaborators(List<String> collaborators) {
         this.collaborators = collaborators;
+    }
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

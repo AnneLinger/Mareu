@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.activities.AddMeetingActivity">
@@ -25,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@id/button_rooms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,15 +36,16 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tf_date"
-            android:layout_width="188dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="188dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
             android:background="@color/lightgrey"
-            android:hint="JJ/MM/AAAA"
-            app:errorEnabled="false"
-            app:layout_constraintEnd_toStartOf="@id/tf_hour"
-            app:layout_constraintRight_toLeftOf="@id/tf_hour"
+            android:hint="Date"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toStartOf="@id/tf_time"
+            app:layout_constraintRight_toLeftOf="@id/tf_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:startIconContentDescription="Calendrier"
@@ -49,19 +53,22 @@
             app:startIconTint="@color/blue">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="date"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tf_hour"
+            android:id="@+id/tf_time"
             android:layout_width="144dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="16dp"
             android:background="@color/lightgrey"
-            android:hint="00:00"
+            android:hint="Heure"
             app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tf_date"
@@ -72,8 +79,11 @@
             app:startIconTint="@color/blue">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="datetime"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,6 +91,7 @@
 
     <Button
         android:id="@+id/button_rooms"
+        android:theme="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
@@ -90,26 +101,70 @@
         android:drawableTint="@color/blue"
         android:text="@string/room"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_collaborators"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/tf_collaborators"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cl_time" />
 
-    <Button
-        android:id="@+id/button_collaborators"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"
-        android:background="@color/lightgrey"
-        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-        android:drawableTint="@color/blue"
-        android:text="@string/collaborators"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/tf_topic"
+        android:layout_marginTop="8dp"
+        android:text="@string/room_hint"
+        android:textSize="12sp"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_rooms" />
+        app:layout_constraintTop_toBottomOf="@id/button_rooms"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tf_collaborators"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="244dp"
+        android:background="@color/lightgrey"
+        android:hint="@string/textAdd"
+        android:inputType="text"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        app:helperTextEnabled="true"
+        app:helperText="@string/collaborator_help"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/chip_group"
+        app:layout_constraintRight_toLeftOf="@+id/bt_save_collaborator"
+        app:layout_constraintTop_toBottomOf="@id/button_rooms">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/et_enter"
+            android:ems="10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/bt_save_collaborator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:layout_marginRight="32dp"
+        app:layout_constraintTop_toTopOf="@+id/tf_collaborators"
+        app:layout_constraintBottom_toBottomOf="@id/tf_collaborators"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/buttonAdd"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tf_collaborators" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_topic"
@@ -120,14 +175,20 @@
         android:background="@color/lightgrey"
         android:hint="Sujet de la réunion"
         android:inputType="text"
+        app:endIconMode="custom"
+        app:endIconCheckable="true"
+        android:touchscreenBlocksFocus="true"
         app:layout_constraintBottom_toTopOf="@+id/button_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_collaborators">
+        app:layout_constraintTop_toBottomOf="@id/chip_group">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_topic"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,8 +199,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
         android:layout_marginVertical="@dimen/vertical_margin"
-        android:backgroundTint="@color/red"
-        android:text="Enregistrer"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

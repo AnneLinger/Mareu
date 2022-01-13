@@ -7,7 +7,7 @@ import com.anne.linger.mareu.services.meeting.NewMeetingApiService;
 *Created by Anne Linger on 23/12/2021
  * Dependency injector to get instance of service
 */
-public class DI {
+public class DIMeeting {
 
     private static MeetingApiService service = new NewMeetingApiService();
 

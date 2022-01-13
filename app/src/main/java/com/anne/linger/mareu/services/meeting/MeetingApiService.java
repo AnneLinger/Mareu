@@ -30,4 +30,26 @@ public interface MeetingApiService {
      * Recover the collaborator List
      */
     List<String> getCollaboratorList();
+
+    /**
+     * Recover the dummy collaborator List
+     */
+    List<String> getDummyCollaboratorList();
+
+    /**
+     * Add a collaborator
+     * @param collaborator
+     */
+    void addCollaborator(String collaborator);
+
+    /**
+     * Remove a collaborator
+     * @param collaborator
+     */
+    void removeCollaborator(String collaborator);
+
+    /**
+     * Clear the collaborator list
+     */
+    void clearCollaboratorList();
 }

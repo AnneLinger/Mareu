@@ -13,7 +13,7 @@ import android.view.View;
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.controller.adapter.ListMeetingAdapter;
 import com.anne.linger.mareu.databinding.ActivityMeetingBinding;
-import com.anne.linger.mareu.di.DI;
+import com.anne.linger.mareu.di.DIMeeting;
 import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 
@@ -22,7 +22,7 @@ import java.util.List;
 public class MeetingActivity extends AppCompatActivity {
 
     private static ActivityMeetingBinding mBinding;
-    private static final MeetingApiService mApiService = DI.getMeetingApiService();
+    private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static RecyclerView mRecyclerView;
     private static List<Meeting> mMeetingList;
 

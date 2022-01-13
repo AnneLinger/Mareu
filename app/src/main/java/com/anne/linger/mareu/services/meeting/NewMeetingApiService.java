@@ -11,7 +11,8 @@ import java.util.List;
 public class NewMeetingApiService implements MeetingApiService {
 
     public List<Meeting> meetingList = new ArrayList();
-    public List<String> collaboratorList = DummyCollaboratorGenerator.generateCollaborators();
+    public List<String> collaboratorList = new ArrayList();
+    public List<String> dummyCollaboratorList =  DummyCollaboratorGenerator.generateCollaborators();
 
     @Override
     public List<Meeting> getMeetingList() {
@@ -33,4 +34,23 @@ public class NewMeetingApiService implements MeetingApiService {
         return collaboratorList;
     }
 
+    @Override
+    public List<String> getDummyCollaboratorList() {
+        return dummyCollaboratorList;
+    }
+
+    @Override
+    public void addCollaborator(String collaborator) {
+        collaboratorList.add(collaborator);
+    }
+
+    @Override
+    public void removeCollaborator(String collaborator) {
+        collaboratorList.remove(collaborator);
+    }
+
+    @Override
+    public void clearCollaboratorList() {
+        collaboratorList.removeAll(collaboratorList);
+    }
 }

@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anne.linger.mareu.R;
+import com.anne.linger.mareu.di.DIMeeting;
 import com.anne.linger.mareu.model.Meeting;
+import com.anne.linger.mareu.services.meeting.MeetingApiService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,9 @@ import java.util.List;
  */
 public class ListCollaboratorAdapter extends RecyclerView.Adapter<ListCollaboratorAdapter.ViewHolder>{
 
-    private final List<String> mCollaborators;
+    private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
+    private static Meeting meeting = mApiService.getMeetingList().get(0);
+    private static List<String> mCollaborators = meeting.getCollaborators();
 
     public ListCollaboratorAdapter(List<String> collaborators) {
         mCollaborators = collaborators;

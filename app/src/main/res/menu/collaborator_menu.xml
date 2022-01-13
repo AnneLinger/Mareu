@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/item_coll1"
-        android:title="mail 1" />
-    <item
-        android:id="@+id/item_coll2"
-        android:title="mail 2" />
-</menu>

@@ -7,4 +7,11 @@
     <color name="red">#FF7C7C</color>
     <color name="lightgrey">#EFEEEE</color>
     <color name="darkgrey">#606060</color>
+    <color name="pink">#F8B1F2</color>
+    <color name="green">#D3F5AF</color>
+    <color name="yellow">#FBE38F</color>
+    <color name="orange">#FEBC4F</color>
+    <color name="purple">#CB95FF</color>
+    <color name="turquoise">#95FFF6</color>
+    <color name="beige">#E9DCAF</color>
 </resources>

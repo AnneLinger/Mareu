@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/collaborators"
+        tools:text="@string/collaborator_error"
         >
     </TextView>
 

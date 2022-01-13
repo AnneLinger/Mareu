@@ -1,6 +1,5 @@
 package com.anne.linger.mareu.controller.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.controller.activities.MeetingActivity;
-import com.anne.linger.mareu.di.DI;
+import com.anne.linger.mareu.di.DIMeeting;
 import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,9 +24,8 @@ import java.util.List;
 */
 public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.ViewHolder>{
 
-    private static final MeetingApiService mApiService = DI.getMeetingApiService();
+    private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static List<Meeting> mMeetings = mApiService.getMeetingList();
-    private static List<String> mCollaboratorList;
 
     public ListMeetingAdapter(List<Meeting> meetings) {
         mMeetings = meetings;
@@ -45,7 +42,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.displayMeeting(mMeetings.get(position));
-        holder.displayCollaborators();
+        holder.displayCollaborators(mMeetings.get(position));
         holder.deleteMeeting(mMeetings.get(position));
     }
 
@@ -56,6 +53,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
+        private final ImageView circle;
         private final TextView name;
         private final TextView startTime;
         private final TextView topic;
@@ -66,6 +64,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            circle = itemView.findViewById(R.id.im_circle);
             name = itemView.findViewById(R.id.tv_name);
             startTime = itemView.findViewById(R.id.tv_start_time);
             topic = itemView.findViewById(R.id.tv_topic);
@@ -73,15 +72,15 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
             delete = itemView.findViewById(R.id.im_delete);
         }
 
-        public void displayMeeting(Meeting meeting) {
+        private void displayMeeting(Meeting meeting) {
+            circle.setImageResource(meeting.getRoom().getDrawable());
             name.setText(meeting.getName());
             startTime.setText(meeting.getStartTime());
             topic.setText(meeting.getTopic());
         }
 
-        public void displayCollaborators() {
-            mCollaboratorList = mApiService.getCollaboratorList();
-            collaborators.setAdapter(new ListCollaboratorAdapter(mCollaboratorList));
+        private void displayCollaborators(Meeting meeting) {
+            collaborators.setAdapter(new ListCollaboratorAdapter(meeting.getCollaborators()));
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             collaborators.setLayoutManager(layoutManager);
         }
@@ -91,7 +90,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
                 @Override
                 public void onClick(View view) {
                     mApiService.getMeetingList().remove(meeting);
-                    MeetingActivity.initList();
+                    //MeetingActivity.initList();
                 }
             });
         }

@@ -6,8 +6,16 @@
     <string name="date_format">JJ/MM/AAAA</string>
     <string name="hour_format">00:00</string>
     <string name="meeting_topic">Sujet</string>
-    <string name="room">Salle</string>
-    <string name="collaborators">Participants</string>
-    <string name="date_error">Erreur : veuillez entrer une date au format JJ/MM/AAAA</string>
+    <string name="room">Salle à définir</string>
+    <string name="room_selected">Salle sélectionnée : </string>
+    <string name="date_error">Veuillez entrer un format JJ/MM/AAAA</string>
+    <string name="time_error">Veuillez entrer un format HH:MM</string>
+    <string name="collaborator_error">Veuillez entrer un format nom@lamzone.com</string>
     <string name="hyphen">-</string>
+    <string name="save">Enregistrer</string>
+    <string name="textAdd">Ajouter un participant</string>
+    <string name="collaborator_help">"Veuillez ajouter au moins 2 participants</string>
+    <string name="buttonAdd">Ajouter</string>
+    <string name="define">définir</string>
+    <string name="room_hint">La salle sera disponible pour la réunion pour une durée d\'une heure</string>
 </resources>
