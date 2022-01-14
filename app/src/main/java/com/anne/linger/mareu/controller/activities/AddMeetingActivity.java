@@ -3,6 +3,7 @@ package com.anne.linger.mareu.controller.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItem;
 
@@ -31,18 +33,25 @@ import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
 import com.google.android.material.chip.Chip;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
 *Created by Anne Linger on 20/12/2021.
 */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class AddMeetingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static ActivityAddMeetingBinding mBinding;
     private static ChipEntryBinding mChipBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
+    private LocalDate date;
+    private String time;
+    private String duration;
     private Room room;
     private List<String> collaboratorList = new ArrayList<>();
     private String name = "Réunion";
@@ -53,13 +62,13 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         initUi();
         initClickOnRoomMenu();
+        initClickOnDurationMenu();
         saveMeeting();
         configureAutoCompleteCollaborator();
         addCollaborator();
         addTopic();
         addDate();
         addTime();
-        //mApiService.clearCollaboratorList();
     }
 
     //Clear focus when user touches anywhere
@@ -99,6 +108,12 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private void convertDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        formatter = formatter.withLocale(Locale.FRANCE);
+        date = LocalDate.parse(dateString, formatter);
+    }
+
     private void addDate() {
        mBinding.etDate.addTextChangedListener(new TextWatcher() {
            @Override
@@ -119,6 +134,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                }
                 else{
                     mBinding.tfDate.setErrorEnabled(false);
+                    convertDate(stringDate);
                }
                 enableButtonSave();
            }
@@ -139,8 +155,8 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String stringDate = mBinding.etTime.getText().toString();
-                if (!stringDate.matches("[0-9]{2}[:][0-9]{2}")) {
+                String stringTime = mBinding.etTime.getText().toString();
+                if (!stringTime.matches("[0-9]{2}[:][0-9]{2}")) {
                     mBinding.etTime.setError(getText(R.string.time_error));
                 }
                 else{
@@ -151,7 +167,66 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    //Show the popup menu when button is clicked
+    //Show the popup menu for the duration when button is clicked
+    private void initClickOnDurationMenu() {
+        mBinding.buttonDuration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configureDurationMenu();
+            }
+        });
+    }
+
+    //Configure the popup menu for the duration
+    private void configureDurationMenu() {
+        PopupMenu popup = new PopupMenu(this, this.mBinding.buttonDuration);
+        Menu durationMenu = popup.getMenu();
+
+        for (String duration : mApiService.getDummyDurationList()){
+            durationMenu.add(duration);
+        }
+
+        popup.show();
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                mBinding.buttonDuration.setText(menuItem.getTitle());
+                enableButtonSave();
+                switch (menuItem.getTitle().toString()) {
+                    case "30 minutes" :
+                        duration = mApiService.getDummyDurationList().get(0);
+                        break;
+                    case "1 heure" :
+                        duration = mApiService.getDummyDurationList().get(1);
+                        break;
+                    case "1 heure 30 minutes" :
+                        duration = mApiService.getDummyDurationList().get(2);
+                        break;
+                    case "2 heures" :
+                        duration = mApiService.getDummyDurationList().get(3);
+                        break;
+                    case "2 heures 30 minutes" :
+                        duration = mApiService.getDummyDurationList().get(4);
+                        break;
+                    case "3 heures" :
+                        duration = mApiService.getDummyDurationList().get(5);
+                        break;
+                    case "3 heures 30 minutes" :
+                        duration = mApiService.getDummyDurationList().get(6);
+                        break;
+                    case "4 heures" :
+                        duration = mApiService.getDummyDurationList().get(7);
+                        break;
+                    default:
+                        room = null;
+                }
+                return true;
+            }
+        });
+    }
+
+    //Show the popup menu for the rooms when button is clicked
     private void initClickOnRoomMenu() {
         mBinding.buttonRooms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +236,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    //Configure the popup menu
+    //Configure the popup menu for the rooms
     private void configureRoomMenu() {
         PopupMenu popup = new PopupMenu(this, this.mBinding.buttonRooms);
         Menu roomMenu = popup.getMenu();
@@ -302,6 +377,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private void enableButtonSave() {
         if(mBinding.etDate.getText().toString().isEmpty() ||
                 mBinding.etTime.getText().toString().isEmpty() ||
+                mBinding.buttonDuration.getText().toString().contains("définir") ||
                 mBinding.buttonRooms.getText().toString().contains("définir") ||
                 mBinding.chipGroup.getChildCount() < 2 ||
                 mBinding.etTopic.getText().toString().isEmpty()) {
@@ -321,10 +397,11 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                 Meeting meeting = new Meeting(
                         "Réunion " + (mApiService.getMeetingList().size()+1),
                         room,
-                        "14:00",
-                        "15:00",
+                        date,
+                        mBinding.etTime.getText().toString(),
+                        duration,
                         collaboratorList,
-                        mBinding.tfTopic.getEditText().getText().toString()
+                        mBinding.etTopic.getText().toString()
                 );
                 mApiService.addMeeting(meeting);
                 finish();

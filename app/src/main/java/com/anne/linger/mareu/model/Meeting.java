@@ -11,17 +11,18 @@ import java.util.List;
 public class Meeting {
     private String name;
     private Room room;
-    private LocalDateTime date;
+    private LocalDate date;
     private String startTime;
-    private String endTime;
+    private String duration;
     private List<String> collaborators;
     private String topic;
 
-    public Meeting(String name, Room room, String startTime, String endTime, List<String> collaborators, String topic) {
+    public Meeting(String name, Room room, LocalDate date, String startTime, String duration, List<String> collaborators, String topic) {
         this.name = name;
         this.room = room;
+        this.date = date;
         this.startTime = startTime;
-        this.endTime = endTime;
+        this.duration = duration;
         this.collaborators = collaborators;
         this.topic = topic;
     }
@@ -42,11 +43,11 @@ public class Meeting {
         this.room = room;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -58,12 +59,12 @@ public class Meeting {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public List<String> getCollaborators() {

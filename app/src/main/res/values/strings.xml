@@ -18,4 +18,5 @@
     <string name="buttonAdd">Ajouter</string>
     <string name="define">définir</string>
     <string name="room_hint">La salle sera disponible pour la réunion pour une durée d\'une heure</string>
+    <string name="duration">Durée à définir</string>
 </resources>
