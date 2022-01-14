@@ -1,6 +1,8 @@
 package com.anne.linger.mareu.controller.activities;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
@@ -15,12 +17,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItem;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.databinding.ActivityAddMeetingBinding;
@@ -36,6 +39,7 @@ import com.google.android.material.chip.Chip;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,6 +53,12 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private static ChipEntryBinding mChipBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
+    private int lastSelectedYear;
+    private int lastSelectedMonth;
+    private int lastSelectedDay;
+    private boolean is24HView = true;
+    private int lastSelectedHour;
+    private int lastSelectedMinute;
     private LocalDate date;
     private String time;
     private String duration;
@@ -61,6 +71,8 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initUi();
+        selectDate();
+        selectTime();
         initClickOnRoomMenu();
         initClickOnDurationMenu();
         saveMeeting();
@@ -108,6 +120,50 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private void selectDate(){
+        mBinding.tfDate.setStartIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configureDatePickerDialog();
+            }
+        });
+
+        //Get current date
+        final Calendar calendar = Calendar.getInstance();
+        this.lastSelectedYear = calendar.get(Calendar.YEAR);
+        this.lastSelectedMonth = calendar.get(Calendar.MONTH);
+        this.lastSelectedDay = calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    private void configureDatePickerDialog() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                if (monthOfYear < 9 && dayOfMonth >= 10) {
+                    mBinding.etDate.setText(dayOfMonth + "/0" + (monthOfYear+1) + "/" + year);
+                }
+                else if (dayOfMonth < 10 && monthOfYear >= 9) {
+                    mBinding.etDate.setText("0" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                }
+                else if (monthOfYear < 9 && dayOfMonth < 10){
+                    mBinding.etDate.setText("0" + dayOfMonth + "/0" + (monthOfYear+1) + "/" + year);
+                }
+                else {
+                    mBinding.etDate.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                }
+                mBinding.tfDate.setErrorEnabled(false);
+
+                lastSelectedYear = year;
+                lastSelectedMonth = monthOfYear;
+                lastSelectedDay = dayOfMonth;
+            }
+        };
+
+        DatePickerDialog datePickerDialog = null;
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDay);
+        datePickerDialog.show();
+    }
+
     private void convertDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formatter = formatter.withLocale(Locale.FRANCE);
@@ -129,7 +185,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
            @Override
            public void afterTextChanged(Editable editable) {
                String stringDate = mBinding.etDate.getText().toString();
-               if (!stringDate.matches("[0-9]{2}[/][0-9]{2}[/][0-9]{4}")) {
+               if (!stringDate.matches("([0-9]{2}/([0-9]{2})/([0-9]{4}))")) {
                     mBinding.etDate.setError(getText(R.string.date_error));
                }
                 else{
@@ -139,6 +195,41 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                 enableButtonSave();
            }
        });
+    }
+
+    private void selectTime() {
+        mBinding.tfTime.setStartIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configureTimePickerDialog();
+            }
+        });
+    }
+
+    private void configureTimePickerDialog() {
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                if (hourOfDay < 10 && minute >= 10) {
+                    mBinding.etTime.setText("0" + hourOfDay + ":" + minute);
+                }
+               else if (minute < 10 && hourOfDay >= 10) {
+                    mBinding.etTime.setText(hourOfDay + ":0" + minute);
+                }
+               else if (hourOfDay < 10 && minute < 10)
+               {
+                    mBinding.etTime.setText("0" + hourOfDay + ":0" + minute);
+                }
+               else {
+                    mBinding.etTime.setText(hourOfDay + ":" + minute);
+                }
+                mBinding.tfTime.setErrorEnabled(false);
+                lastSelectedHour = hourOfDay;
+                lastSelectedMinute = minute;
+            }
+        };
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener,lastSelectedHour, lastSelectedMinute, is24HView);
+        timePickerDialog.show();
     }
 
     private void addTime() {
