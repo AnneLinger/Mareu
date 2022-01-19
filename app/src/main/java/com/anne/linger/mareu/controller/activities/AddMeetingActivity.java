@@ -36,6 +36,7 @@ import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.model.Room;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
+import com.anne.linger.mareu.utils.PopupUtils;
 import com.google.android.material.chip.Chip;
 
 import java.text.SimpleDateFormat;
@@ -57,6 +58,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private static ChipEntryBinding mChipBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
+    private static final PopupUtils popupUtils = new PopupUtils();
     private int lastSelectedYear;
     private int lastSelectedMonth;
     private int lastSelectedDay;
@@ -64,14 +66,11 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private int lastSelectedHour;
     private int lastSelectedMinute;
     private LocalDate date;
-    private String time;
     private List<String> durationList = mApiService.getDummyDurationList();
     private String duration;
     private List<Room> openedRooms = mRoomApiService.getRoomList();
     private Room room;
     private List<String> collaboratorList = new ArrayList<>();
-    private String name = "Réunion";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +126,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //Select the date in the DatePickerDialog
     private void selectDate(){
         mBinding.tfDate.setStartIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +142,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         this.lastSelectedDay = calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+    //Configure the DatePickerDialog
     private void configureDatePickerDialog() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -164,34 +165,34 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         datePickerDialog.show();
     }
 
+    //Recover the date from the DatePickerDialog
     public static java.util.Date getDateFromDatePicker(DatePicker datePicker, int year, int month, int day){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         return calendar.getTime();
     }
 
+    //Convert String date to LocalDate
     private void convertDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         formatter = formatter.withLocale(Locale.FRANCE);
         date = LocalDate.parse(dateString, formatter);
     }
 
+    //Display the date in the EditText
     private void addDate() {
        mBinding.etDate.addTextChangedListener(new TextWatcher() {
            @Override
            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
            }
 
            @Override
            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
            }
 
            @Override
            public void afterTextChanged(Editable editable) {
                String stringDate = mBinding.etDate.getText().toString();
-               Log.e("tag", mBinding.etDate.getText().toString());
 
                if (!stringDate.matches("([0-9]{2}/([0-9]{2})/([0-9]{4}))")) {
                     mBinding.etDate.setError(getText(R.string.date_error));
@@ -199,7 +200,6 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                 else{
                     mBinding.tfDate.setErrorEnabled(false);
                     convertDate(stringDate);
-                            Log.e("tag", date.toString());
                     checkOpenedRooms();
                }
                enableButtonRoom();
@@ -208,6 +208,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
        });
     }
 
+    //Select the time in the TimePickerDialog
     private void selectTime() {
         mBinding.tfTime.setStartIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +218,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    //Configure the TimePickerDialog
     private void configureTimePickerDialog() {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -234,6 +236,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         timePickerDialog.show();
     }
 
+    //Recover the time from the TimePickerDialog
     public static java.util.Date getTimeFromTimePicker(TimePicker timePicker, int hourOfDay, int minute){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
@@ -241,16 +244,15 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         return calendar.getTime();
     }
 
+    //Display the time in the EditText
     private void addTime() {
         mBinding.etTime.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -280,16 +282,12 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
     //Configure the popup menu for the duration
     private void configureDurationMenu() {
-        PopupMenu popup = new PopupMenu(this, this.mBinding.buttonDuration);
-        Menu durationMenu = popup.getMenu();
+        PopupMenu popupMenuDuration = popupUtils.createPopupMenu(this, mBinding.buttonDuration);
+        Menu menuDuration = popupUtils.createMenu(popupMenuDuration);
+        popupUtils.addStringItems(durationList, menuDuration);
+        popupMenuDuration.show();
 
-        for (String duration : durationList){
-            durationMenu.add(duration);
-        }
-
-        popup.show();
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        popupMenuDuration.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 mBinding.buttonDuration.setText(menuItem.getTitle());
@@ -305,6 +303,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    //Enable the button Room when date, time and duration are filled
     private void enableButtonRoom() {
         if(mBinding.etDate.getText().toString().isEmpty() ||
                 mBinding.etTime.getText().toString().isEmpty() ||
@@ -317,16 +316,15 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //Check which rooms are opened
     private void checkOpenedRooms() {
         for (Meeting meeting : mApiService.getMeetingList()){
             if (meeting.getDate().equals(date)){
-                Log.e("tag", date.toString());
-                Log.e("tag", mApiService.getMeetingList().get(0).getDate().toString());
                 openedRooms.remove(meeting.getRoom());
             }
         }
         if (openedRooms.isEmpty()) {
-            Toast.makeText(AddMeetingActivity.this, "Toutes les salles sont réservées, merci de choisir une autre date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddMeetingActivity.this, R.string.allRoomsReserved, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -342,18 +340,12 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
     //Configure the popup menu for the rooms
     private void configureRoomMenu() {
-        PopupMenu popup = new PopupMenu(this, this.mBinding.buttonRooms);
-        Menu roomMenu = popup.getMenu();
+        PopupMenu popupMenuRoom = popupUtils.createPopupMenu(this, mBinding.buttonRooms);
+        Menu menuRoom = popupUtils.createMenu(popupMenuRoom);
+        popupUtils.addRoomItems(openedRooms, menuRoom);
+        popupMenuRoom.show();
 
-        //checkOpenedRooms();
-
-        for (Room room : openedRooms){
-            roomMenu.add(room.getName());
-        }
-
-        popup.show();
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        popupMenuRoom.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 mBinding.buttonRooms.setText(menuItem.getTitle());
@@ -368,6 +360,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    //Autocomplete the EditText for collaborators
     private void configureAutoCompleteCollaborator() {
         AutoCompleteTextView autoCompleteTextView = mBinding.etEnter;
         List<String> collaborators =  mApiService.getDummyCollaboratorList();
@@ -375,6 +368,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         autoCompleteTextView.setAdapter(adapter);
     }
 
+    //Add collaborators to EditText
     private void addCollaborator() {
         mBinding.etEnter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -384,7 +378,6 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -414,6 +407,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    //Add a chip for the collaborator added
     private void addNewChip() {
         String chipText = mBinding.etEnter.getText().toString();
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -424,6 +418,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         mBinding.chipGroup.addView(newChip);
     }
 
+    //Remove a chip
     @Override
     public void onClick(View view) {
         Chip chip = (Chip) view;
@@ -432,18 +427,15 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         mBinding.chipGroup.removeView(chip);
     }
 
+    //Check if topic is filled
     private void addTopic() {
         mBinding.etTopic.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 enableButtonSave();
@@ -451,6 +443,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    //The button save is enabled only when all fields are filled
     private void enableButtonSave() {
         if(mBinding.etDate.getText().toString().isEmpty() ||
                 mBinding.etTime.getText().toString().isEmpty() ||
@@ -466,15 +459,14 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //Save the meeting and go back to the main activity
     private void saveMeeting() {
         mBinding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Log.e("tag", date.toString());
-                Log.e("tag", mBinding.etTime.getText().toString());
                 Log.e("tag", duration);
-                Log.e("tag", collaboratorList.toString());
 
                         Meeting meeting = new Meeting(
                         "Réunion " + (mApiService.getMeetingList().size()+1),

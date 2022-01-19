@@ -19,4 +19,6 @@
     <string name="define">définir</string>
     <string name="room_hint">La salle sera disponible pour la réunion pour une durée d\'une heure</string>
     <string name="duration">Durée à définir</string>
+    <string name="meeting">Réunion</string>
+    <string name="allRoomsReserved">Toutes les salles sont réservées, merci de choisir une autre date</string>
 </resources>
