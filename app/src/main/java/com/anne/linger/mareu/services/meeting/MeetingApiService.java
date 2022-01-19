@@ -24,7 +24,7 @@ public interface MeetingApiService {
      * Remove a meeting
      * @param meeting
      */
-    void removeMeeting(Meeting meeting);
+    void deleteMeeting(Meeting meeting);
 
     /**
      * Recover the dummy collaborator List

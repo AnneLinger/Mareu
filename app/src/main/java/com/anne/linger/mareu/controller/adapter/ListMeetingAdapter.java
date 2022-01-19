@@ -1,5 +1,6 @@
 package com.anne.linger.mareu.controller.adapter;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anne.linger.mareu.R;
-import com.anne.linger.mareu.controller.activities.MeetingActivity;
 import com.anne.linger.mareu.di.DIMeeting;
+import com.anne.linger.mareu.event.DeleteMeetingEvent;
 import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
+
+import org.greenrobot.eventbus.EventBus;
+
 
 import java.util.List;
 
@@ -89,7 +93,8 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mApiService.getMeetingList().remove(meeting);
+                    EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
+                    //mApiService.getMeetingList().remove(meeting);
                     //MeetingActivity.initList();
                 }
             });

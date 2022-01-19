@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,10 +38,12 @@ import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
 import com.google.android.material.chip.Chip;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,7 +65,9 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private int lastSelectedMinute;
     private LocalDate date;
     private String time;
+    private List<String> durationList = mApiService.getDummyDurationList();
     private String duration;
+    private List<Room> openedRooms = mRoomApiService.getRoomList();
     private Room room;
     private List<String> collaboratorList = new ArrayList<>();
     private String name = "Réunion";
@@ -107,6 +113,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         mBinding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
         mChipBinding = ChipEntryBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
+        mBinding.buttonRooms.setEnabled(false);
         mBinding.buttonSave.setEnabled(false);
         setContentView(view);
         configureToolbar();
@@ -139,18 +146,11 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                if (monthOfYear < 9 && dayOfMonth >= 10) {
-                    mBinding.etDate.setText(dayOfMonth + "/0" + (monthOfYear+1) + "/" + year);
-                }
-                else if (dayOfMonth < 10 && monthOfYear >= 9) {
-                    mBinding.etDate.setText("0" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
-                }
-                else if (monthOfYear < 9 && dayOfMonth < 10){
-                    mBinding.etDate.setText("0" + dayOfMonth + "/0" + (monthOfYear+1) + "/" + year);
-                }
-                else {
-                    mBinding.etDate.setText(dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
-                }
+                Date date = getDateFromDatePicker(datePicker, year, monthOfYear, dayOfMonth);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String result = formatter.format(date);
+                mBinding.etDate.setText(result);
+
                 mBinding.tfDate.setErrorEnabled(false);
 
                 lastSelectedYear = year;
@@ -162,6 +162,12 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         DatePickerDialog datePickerDialog = null;
         datePickerDialog = new DatePickerDialog(this, dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDay);
         datePickerDialog.show();
+    }
+
+    public static java.util.Date getDateFromDatePicker(DatePicker datePicker, int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        return calendar.getTime();
     }
 
     private void convertDate(String dateString) {
@@ -185,14 +191,19 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
            @Override
            public void afterTextChanged(Editable editable) {
                String stringDate = mBinding.etDate.getText().toString();
+               Log.e("tag", mBinding.etDate.getText().toString());
+
                if (!stringDate.matches("([0-9]{2}/([0-9]{2})/([0-9]{4}))")) {
                     mBinding.etDate.setError(getText(R.string.date_error));
                }
                 else{
                     mBinding.tfDate.setErrorEnabled(false);
                     convertDate(stringDate);
+                            Log.e("tag", date.toString());
+                    checkOpenedRooms();
                }
-                enableButtonSave();
+               enableButtonRoom();
+               enableButtonSave();
            }
        });
     }
@@ -210,19 +221,10 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                if (hourOfDay < 10 && minute >= 10) {
-                    mBinding.etTime.setText("0" + hourOfDay + ":" + minute);
-                }
-               else if (minute < 10 && hourOfDay >= 10) {
-                    mBinding.etTime.setText(hourOfDay + ":0" + minute);
-                }
-               else if (hourOfDay < 10 && minute < 10)
-               {
-                    mBinding.etTime.setText("0" + hourOfDay + ":0" + minute);
-                }
-               else {
-                    mBinding.etTime.setText(hourOfDay + ":" + minute);
-                }
+                Date time = getTimeFromTimePicker(timePicker, hourOfDay, minute);
+                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+                String result = formatter.format(time);
+                mBinding.etTime.setText(result);
                 mBinding.tfTime.setErrorEnabled(false);
                 lastSelectedHour = hourOfDay;
                 lastSelectedMinute = minute;
@@ -230,6 +232,13 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         };
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener,lastSelectedHour, lastSelectedMinute, is24HView);
         timePickerDialog.show();
+    }
+
+    public static java.util.Date getTimeFromTimePicker(TimePicker timePicker, int hourOfDay, int minute){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+        return calendar.getTime();
     }
 
     private void addTime() {
@@ -253,6 +262,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                 else{
                     mBinding.tfTime.setErrorEnabled(false);
                 }
+                enableButtonRoom();
                 enableButtonSave();
             }
         });
@@ -273,7 +283,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         PopupMenu popup = new PopupMenu(this, this.mBinding.buttonDuration);
         Menu durationMenu = popup.getMenu();
 
-        for (String duration : mApiService.getDummyDurationList()){
+        for (String duration : durationList){
             durationMenu.add(duration);
         }
 
@@ -283,38 +293,41 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 mBinding.buttonDuration.setText(menuItem.getTitle());
+                enableButtonRoom();
                 enableButtonSave();
-                switch (menuItem.getTitle().toString()) {
-                    case "30 minutes" :
-                        duration = mApiService.getDummyDurationList().get(0);
-                        break;
-                    case "1 heure" :
-                        duration = mApiService.getDummyDurationList().get(1);
-                        break;
-                    case "1 heure 30 minutes" :
-                        duration = mApiService.getDummyDurationList().get(2);
-                        break;
-                    case "2 heures" :
-                        duration = mApiService.getDummyDurationList().get(3);
-                        break;
-                    case "2 heures 30 minutes" :
-                        duration = mApiService.getDummyDurationList().get(4);
-                        break;
-                    case "3 heures" :
-                        duration = mApiService.getDummyDurationList().get(5);
-                        break;
-                    case "3 heures 30 minutes" :
-                        duration = mApiService.getDummyDurationList().get(6);
-                        break;
-                    case "4 heures" :
-                        duration = mApiService.getDummyDurationList().get(7);
-                        break;
-                    default:
-                        room = null;
+                for (String mDuration : durationList){
+                    if(menuItem.getTitle().toString().equals(mDuration)){
+                        duration = mDuration;
+                    }
                 }
                 return true;
             }
         });
+    }
+
+    private void enableButtonRoom() {
+        if(mBinding.etDate.getText().toString().isEmpty() ||
+                mBinding.etTime.getText().toString().isEmpty() ||
+                mBinding.buttonDuration.getText().toString().contains("définir"))
+        {
+            mBinding.buttonRooms.setEnabled(false);
+        }
+        else {
+            mBinding.buttonRooms.setEnabled(true);
+        }
+    }
+
+    private void checkOpenedRooms() {
+        for (Meeting meeting : mApiService.getMeetingList()){
+            if (meeting.getDate().equals(date)){
+                Log.e("tag", date.toString());
+                Log.e("tag", mApiService.getMeetingList().get(0).getDate().toString());
+                openedRooms.remove(meeting.getRoom());
+            }
+        }
+        if (openedRooms.isEmpty()) {
+            Toast.makeText(AddMeetingActivity.this, "Toutes les salles sont réservées, merci de choisir une autre date", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //Show the popup menu for the rooms when button is clicked
@@ -332,7 +345,9 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         PopupMenu popup = new PopupMenu(this, this.mBinding.buttonRooms);
         Menu roomMenu = popup.getMenu();
 
-        for (Room room : mRoomApiService.getRoomList()){
+        //checkOpenedRooms();
+
+        for (Room room : openedRooms){
             roomMenu.add(room.getName());
         }
 
@@ -343,39 +358,10 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
             public boolean onMenuItemClick(MenuItem menuItem) {
                 mBinding.buttonRooms.setText(menuItem.getTitle());
                 enableButtonSave();
-                switch (menuItem.getTitle().toString()) {
-                    case "Salle beige" :
-                        room = mRoomApiService.getRoomList().get(0);
-                        break;
-                    case "Salle bleue" :
-                        room = mRoomApiService.getRoomList().get(1);
-                        break;
-                    case "Salle grise" :
-                        room = mRoomApiService.getRoomList().get(2);
-                        break;
-                    case "Salle jaune" :
-                        room = mRoomApiService.getRoomList().get(3);
-                        break;
-                    case "Salle orange" :
-                        room = mRoomApiService.getRoomList().get(4);
-                        break;
-                    case "Salle rose" :
-                        room = mRoomApiService.getRoomList().get(5);
-                        break;
-                    case "Salle rouge" :
-                        room = mRoomApiService.getRoomList().get(6);
-                        break;
-                    case "Salle turquoise" :
-                        room = mRoomApiService.getRoomList().get(7);
-                        break;
-                    case "Salle verte" :
-                        room = mRoomApiService.getRoomList().get(8);
-                        break;
-                    case "Salle violette" :
-                        room = mRoomApiService.getRoomList().get(9);
-                        break;
-                    default:
-                        room = null;
+                for (Room mRoom : openedRooms){
+                    if(menuItem.getTitle().toString().equals(mRoom.getName())){
+                        room = mRoom;
+                    }
                 }
                 return true;
             }
@@ -441,9 +427,9 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         Chip chip = (Chip) view;
-        mBinding.chipGroup.removeView(chip);
-        String collaboratorToRemove = mBinding.etEnter.getText().toString();
+        String collaboratorToRemove = chip.getText().toString();
         collaboratorList.remove(collaboratorToRemove);
+        mBinding.chipGroup.removeView(chip);
     }
 
     private void addTopic() {
@@ -485,7 +471,12 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View view) {
 
-                Meeting meeting = new Meeting(
+                Log.e("tag", date.toString());
+                Log.e("tag", mBinding.etTime.getText().toString());
+                Log.e("tag", duration);
+                Log.e("tag", collaboratorList.toString());
+
+                        Meeting meeting = new Meeting(
                         "Réunion " + (mApiService.getMeetingList().size()+1),
                         room,
                         date,

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".controller.activities.MeetingActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tb_main"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"
