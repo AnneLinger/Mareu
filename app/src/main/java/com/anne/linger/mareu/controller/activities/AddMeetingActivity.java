@@ -28,6 +28,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anne.linger.mareu.R;
+import com.anne.linger.mareu.controller.CheckOpenedRooms;
 import com.anne.linger.mareu.databinding.ActivityAddMeetingBinding;
 import com.anne.linger.mareu.databinding.ChipEntryBinding;
 import com.anne.linger.mareu.di.DIMeeting;
@@ -59,6 +60,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
     private static final PopupUtils popupUtils = new PopupUtils();
+    private static final CheckOpenedRooms checkOpenedRooms = new CheckOpenedRooms();
     private int lastSelectedYear;
     private int lastSelectedMonth;
     private int lastSelectedDay;
@@ -200,7 +202,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                 else{
                     mBinding.tfDate.setErrorEnabled(false);
                     convertDate(stringDate);
-                    checkOpenedRooms();
+                    checkOpenedRooms.checkOpenedRooms(date, openedRooms, AddMeetingActivity.this);
                }
                enableButtonRoom();
                enableButtonSave();
@@ -313,18 +315,6 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
         }
         else {
             mBinding.buttonRooms.setEnabled(true);
-        }
-    }
-
-    //Check which rooms are opened
-    private void checkOpenedRooms() {
-        for (Meeting meeting : mApiService.getMeetingList()){
-            if (meeting.getDate().equals(date)){
-                openedRooms.remove(meeting.getRoom());
-            }
-        }
-        if (openedRooms.isEmpty()) {
-            Toast.makeText(AddMeetingActivity.this, R.string.allRoomsReserved, Toast.LENGTH_SHORT).show();
         }
     }
 
