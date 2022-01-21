@@ -28,7 +28,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anne.linger.mareu.R;
-import com.anne.linger.mareu.controller.CheckOpenedRooms;
+import com.anne.linger.mareu.controller.ManageOpenedRooms;
 import com.anne.linger.mareu.databinding.ActivityAddMeetingBinding;
 import com.anne.linger.mareu.databinding.ChipEntryBinding;
 import com.anne.linger.mareu.di.DIMeeting;
@@ -60,7 +60,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
     private static final PopupUtils popupUtils = new PopupUtils();
-    private static final CheckOpenedRooms checkOpenedRooms = new CheckOpenedRooms();
+    private static final ManageOpenedRooms MANAGE_OPENED_ROOMS = new ManageOpenedRooms();
     private int lastSelectedYear;
     private int lastSelectedMonth;
     private int lastSelectedDay;
@@ -68,6 +68,7 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
     private int lastSelectedHour;
     private int lastSelectedMinute;
     private LocalDate date;
+    private String time;
     private List<String> durationList = mApiService.getDummyDurationList();
     private String duration;
     private List<Room> openedRooms = mRoomApiService.getRoomList();
@@ -194,18 +195,19 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
            @Override
            public void afterTextChanged(Editable editable) {
-               String stringDate = mBinding.etDate.getText().toString();
+                String stringDate = mBinding.etDate.getText().toString();
 
-               if (!stringDate.matches("([0-9]{2}/([0-9]{2})/([0-9]{4}))")) {
+                if (!stringDate.matches("([0-9]{2}/([0-9]{2})/([0-9]{4}))")) {
                     mBinding.etDate.setError(getText(R.string.date_error));
-               }
+                }
                 else{
                     mBinding.tfDate.setErrorEnabled(false);
                     convertDate(stringDate);
-                    checkOpenedRooms.checkOpenedRooms(date, openedRooms, AddMeetingActivity.this);
                }
-               enableButtonRoom();
-               enableButtonSave();
+                MANAGE_OPENED_ROOMS.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
+               MANAGE_OPENED_ROOMS.allRoomsReserved(openedRooms, AddMeetingActivity.this);
+               ManageOpenedRooms.enableButtonRoom(mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
+                enableButtonSave();
            }
        });
     }
@@ -259,63 +261,19 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String stringTime = mBinding.etTime.getText().toString();
-                if (!stringTime.matches("[0-9]{2}[:][0-9]{2}")) {
+                time = mBinding.etTime.getText().toString();
+                if (!time.matches("[0-9]{2}[:][0-9]{2}")) {
                     mBinding.etTime.setError(getText(R.string.time_error));
                 }
                 else{
                     mBinding.tfTime.setErrorEnabled(false);
                 }
-                enableButtonRoom();
+                MANAGE_OPENED_ROOMS.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
+                MANAGE_OPENED_ROOMS.allRoomsReserved(openedRooms, AddMeetingActivity.this);
+                ManageOpenedRooms.enableButtonRoom(mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
                 enableButtonSave();
             }
         });
-    }
-
-    //Show the popup menu for the duration when button is clicked
-    private void initClickOnDurationMenu() {
-        mBinding.buttonDuration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                configureDurationMenu();
-            }
-        });
-    }
-
-    //Configure the popup menu for the duration
-    private void configureDurationMenu() {
-        PopupMenu popupMenuDuration = popupUtils.createPopupMenu(this, mBinding.buttonDuration);
-        Menu menuDuration = popupUtils.createMenu(popupMenuDuration);
-        popupUtils.addStringItems(durationList, menuDuration);
-        popupMenuDuration.show();
-
-        popupMenuDuration.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                mBinding.buttonDuration.setText(menuItem.getTitle());
-                enableButtonRoom();
-                enableButtonSave();
-                for (String mDuration : durationList){
-                    if(menuItem.getTitle().toString().equals(mDuration)){
-                        duration = mDuration;
-                    }
-                }
-                return true;
-            }
-        });
-    }
-
-    //Enable the button Room when date, time and duration are filled
-    private void enableButtonRoom() {
-        if(mBinding.etDate.getText().toString().isEmpty() ||
-                mBinding.etTime.getText().toString().isEmpty() ||
-                mBinding.buttonDuration.getText().toString().contains("définir"))
-        {
-            mBinding.buttonRooms.setEnabled(false);
-        }
-        else {
-            mBinding.buttonRooms.setEnabled(true);
-        }
     }
 
     //Show the popup menu for the rooms when button is clicked
@@ -343,6 +301,38 @@ public class AddMeetingActivity extends AppCompatActivity implements View.OnClic
                 for (Room mRoom : openedRooms){
                     if(menuItem.getTitle().toString().equals(mRoom.getName())){
                         room = mRoom;
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+    //Show the popup menu for the duration when button is clicked
+    private void initClickOnDurationMenu() {
+        mBinding.buttonDuration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                configureDurationMenu();
+            }
+        });
+    }
+
+    //Configure the popup menu for the duration
+    private void configureDurationMenu() {
+        PopupMenu popupMenuDuration = popupUtils.createPopupMenu(this, mBinding.buttonDuration);
+        Menu menuDuration = popupUtils.createMenu(popupMenuDuration);
+        popupUtils.addStringItems(durationList, menuDuration);
+        popupMenuDuration.show();
+
+        popupMenuDuration.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                mBinding.buttonDuration.setText(menuItem.getTitle());
+                enableButtonSave();
+                for (String mDuration : durationList){
+                    if(menuItem.getTitle().toString().equals(mDuration)){
+                        duration = mDuration;
                     }
                 }
                 return true;

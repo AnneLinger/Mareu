@@ -1,6 +1,5 @@
 package com.anne.linger.mareu.controller.adapter;
 
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +78,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
         private void displayMeeting(Meeting meeting) {
             circle.setImageResource(meeting.getRoom().getDrawable());
             name.setText(meeting.getName());
-            startTime.setText(meeting.getStartTime());
+            startTime.setText(meeting.getTime());
             topic.setText(meeting.getTopic());
         }
 

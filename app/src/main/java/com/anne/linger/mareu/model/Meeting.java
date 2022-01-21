@@ -1,8 +1,6 @@
 package com.anne.linger.mareu.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,16 +10,16 @@ public class Meeting {
     private String name;
     private Room room;
     private LocalDate date;
-    private String startTime;
+    private String time;
     private String duration;
     private List<String> collaborators;
     private String topic;
 
-    public Meeting(String name, Room room, LocalDate date, String startTime, String duration, List<String> collaborators, String topic) {
+    public Meeting(String name, Room room, LocalDate date, String time, String duration, List<String> collaborators, String topic) {
         this.name = name;
         this.room = room;
         this.date = date;
-        this.startTime = startTime;
+        this.time = time;
         this.duration = duration;
         this.collaborators = collaborators;
         this.topic = topic;
@@ -51,12 +49,12 @@ public class Meeting {
         this.date = date;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getDuration() {
