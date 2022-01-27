@@ -1,9 +1,8 @@
-package com.anne.linger.mareu.controller.adapter;
+package com.anne.linger.mareu.controller.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,11 +13,10 @@ import com.anne.linger.mareu.di.DIMeeting;
 import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Created by Anne Linger on 24/12/2021.
+ *Adapter and ViewHolder to display an horizontal recycler view for collaborators
  */
 public class ListCollaboratorAdapter extends RecyclerView.Adapter<ListCollaboratorAdapter.ViewHolder>{
 

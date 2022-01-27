@@ -5,7 +5,7 @@ import com.anne.linger.mareu.model.Meeting;
 import java.util.List;
 
 /**
- * Created by Anne Linger on 20/12/2021.
+ * Interface to manage the meeting lists
  */
 public interface MeetingApiService {
 

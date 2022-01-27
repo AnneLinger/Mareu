@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.anne.linger.mareu.R;
-import com.anne.linger.mareu.controller.adapter.ListMeetingAdapter;
+import com.anne.linger.mareu.controller.adapters.ListMeetingAdapter;
 import com.anne.linger.mareu.databinding.ActivityMeetingBinding;
 import com.anne.linger.mareu.di.DIMeeting;
 import com.anne.linger.mareu.event.DeleteMeetingEvent;
@@ -25,6 +26,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+/**
+ * Main activity to display meetings in a recycler view
+ */
 public class MeetingActivity extends AppCompatActivity {
 
     private static ActivityMeetingBinding mBinding;
@@ -41,9 +45,21 @@ public class MeetingActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         initList();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     //Configure the UI
@@ -78,6 +94,14 @@ public class MeetingActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(new ListMeetingAdapter(mMeetingList));
     }
 
+    //Init the list of meetings with param
+    private static void initList(List<Meeting> meetingList) {
+        //Recover the neighbour list or the favorite neighbours
+        mMeetingList = meetingList;
+        //Items of the RecyclerView filled with mNeighbourList
+        mRecyclerView.setAdapter(new ListMeetingAdapter(mMeetingList));
+    }
+
     //Configure the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,6 +119,7 @@ public class MeetingActivity extends AppCompatActivity {
     @Subscribe
     //Delete a meeting
     public void deleteMeeting(DeleteMeetingEvent event) {
+        Log.e("tag", event.meeting.toString());
         mApiService.deleteMeeting(event.meeting);
         initList();
     }

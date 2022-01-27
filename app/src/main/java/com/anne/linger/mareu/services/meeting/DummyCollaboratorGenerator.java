@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 21/12/2021.
-*/
+* Generates a dummy list of collaborators
+ */
 public abstract class DummyCollaboratorGenerator {
 
     public static List<String> DUMMY_COLLABORATORS = Arrays.asList(

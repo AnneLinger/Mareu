@@ -4,8 +4,7 @@ import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.meeting.NewMeetingApiService;
 
 /**
-*Created by Anne Linger on 23/12/2021
- * Dependency injector to get instance of service
+ * Dependency injector to get instance of meeting service
 */
 public class DIMeeting {
 

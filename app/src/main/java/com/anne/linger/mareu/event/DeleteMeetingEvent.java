@@ -3,8 +3,9 @@ package com.anne.linger.mareu.event;
 import com.anne.linger.mareu.model.Meeting;
 
 /**
-*Created by Anne Linger on 17/01/2022.
-*/public class DeleteMeetingEvent {
+*Event called when a user wants to delete a meeting
+*/
+public class DeleteMeetingEvent {
     /**
      * Meeting to delete
      */

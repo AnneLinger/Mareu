@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 21/12/2021.
+*Implements the room interface
 */
 public class DummyRoomApiService implements RoomApiService {
 
@@ -15,10 +15,5 @@ public class DummyRoomApiService implements RoomApiService {
     @Override
     public List<Room> getRoomList() {
         return roomList;
-    }
-
-    @Override
-    public boolean isReserved(Room room) {
-        return room.getReserved();
     }
 }

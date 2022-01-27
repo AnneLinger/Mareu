@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 14/01/2022.
+*Generates a dummy list of rooms
 */public abstract class DummyDurationGenerator {
 
     public static List<String> DUMMY_DURATIONS = Arrays.asList(

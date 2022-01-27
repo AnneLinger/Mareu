@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 20/12/2021.
+*Implements the meeting interface
 */
 public class NewMeetingApiService implements MeetingApiService {
 

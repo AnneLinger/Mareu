@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 20/12/2021.
+*Model class for a meeting
 */
 public class Meeting {
     private String name;

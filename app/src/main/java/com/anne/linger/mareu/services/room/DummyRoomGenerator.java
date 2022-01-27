@@ -8,21 +8,21 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 21/12/2021.
+*Generates a list of dummy rooms
 */
 public abstract class DummyRoomGenerator {
 
     public static List<Room> DUMMY_ROOMS = Arrays.asList(
-            new Room("Salle bleue", R.drawable.blue_circle,false),
-            new Room("Salle grise", R.drawable.grey_circle, false),
-            new Room("Salle jaune", R.drawable.yellow_circle, false),
-            new Room("Salle marron", R.drawable.brown_circle, false),
-            new Room("Salle orange", R.drawable.orange_circle, false),
-            new Room("Salle rose", R.drawable.pink_circle, false),
-            new Room("Salle rouge", R.drawable.red_circle, false),
-            new Room("Salle turquoise", R.drawable.turquoise_circle, false),
-            new Room("Salle verte", R.drawable.green_circle, false),
-            new Room("Salle violette", R.drawable.purple_circle, false)
+            new Room("Salle bleue", R.drawable.blue_circle),
+            new Room("Salle grise", R.drawable.grey_circle),
+            new Room("Salle jaune", R.drawable.yellow_circle),
+            new Room("Salle marron", R.drawable.brown_circle),
+            new Room("Salle orange", R.drawable.orange_circle),
+            new Room("Salle rose", R.drawable.pink_circle),
+            new Room("Salle rouge", R.drawable.red_circle),
+            new Room("Salle turquoise", R.drawable.turquoise_circle),
+            new Room("Salle verte", R.drawable.green_circle),
+            new Room("Salle violette", R.drawable.purple_circle)
             );
 
     static List<Room> generateRooms() {

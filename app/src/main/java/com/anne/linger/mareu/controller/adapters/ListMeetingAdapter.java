@@ -1,6 +1,7 @@
-package com.anne.linger.mareu.controller.adapter;
+package com.anne.linger.mareu.controller.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 24/12/2021.
+*Adapter and ViewHolder to display a recycler view for the meeting list
 */
 public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.ViewHolder>{
 
@@ -92,6 +93,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.e("tag", "coucou");
                     EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
                     //mApiService.getMeetingList().remove(meeting);
                     //MeetingActivity.initList();

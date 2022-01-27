@@ -6,8 +6,7 @@ import com.anne.linger.mareu.services.room.DummyRoomApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
 
 /**
-*Created by Anne Linger on 03/01/2022
- *  * Dependency injector to get instance of service
+ * Dependency injector to get instance of room service
 */public class DIRoom {
 
     private static RoomApiService service = new DummyRoomApiService();
