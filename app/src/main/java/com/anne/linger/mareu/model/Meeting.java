@@ -1,6 +1,6 @@
 package com.anne.linger.mareu.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,13 +9,13 @@ import java.util.List;
 public class Meeting {
     private String name;
     private Room room;
-    private LocalDate date;
+    private Date date;
     private String time;
     private String duration;
     private List<String> collaborators;
     private String topic;
 
-    public Meeting(String name, Room room, LocalDate date, String time, String duration, List<String> collaborators, String topic) {
+    public Meeting(String name, Room room, Date date, String time, String duration, List<String> collaborators, String topic) {
         this.name = name;
         this.room = room;
         this.date = date;
@@ -41,11 +41,11 @@ public class Meeting {
         this.room = room;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

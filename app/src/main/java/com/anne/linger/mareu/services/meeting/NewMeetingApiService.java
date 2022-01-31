@@ -1,8 +1,12 @@
 package com.anne.linger.mareu.services.meeting;
 
+import android.util.Log;
+
 import com.anne.linger.mareu.model.Meeting;
+import com.anne.linger.mareu.model.Room;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +31,26 @@ public class NewMeetingApiService implements MeetingApiService {
     @Override
     public void deleteMeeting(Meeting meeting) {
         meetingList.remove(meeting);
+    }
+
+    @Override
+    public List<Meeting> getMeetingListByDate(Date date) {
+        List<Meeting> meetingsByDate = new ArrayList<>();
+        for (Meeting meeting : meetingList)
+            if (meeting.getDate().equals(date)) {
+                meetingsByDate.add(meeting);
+            }
+        return meetingsByDate;
+    }
+
+    @Override
+    public List<Meeting> getMeetingListByRoom(String roomName) {
+        List<Meeting> meetingsByRoom = new ArrayList<>();
+        for (Meeting meeting : meetingList)
+            if (meeting.getRoom().getName().equals(roomName)) {
+                meetingsByRoom.add(meeting);
+            }
+        return meetingsByRoom;
     }
 
     @Override

@@ -5,11 +5,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,7 +17,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anne.linger.mareu.R;
@@ -32,14 +29,12 @@ import com.anne.linger.mareu.model.Room;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
 *Activity to add a new meeting to the recycler view
@@ -56,14 +51,13 @@ public class AddMeetingActivity extends AppCompatActivity {
     private boolean is24HView = true;
     private int lastSelectedHour;
     private int lastSelectedMinute;
-    public LocalDate date;
+    public Date date;
     private String time;
     private List<String> durationList = mApiService.getDummyDurationList();
     private List<Room> openedRooms = mRoomApiService.getRoomList();
     private Room room;
     private List<String> collaboratorList = new ArrayList<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,9 +132,14 @@ public class AddMeetingActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                Date date = manageAddMeeting.getDateFromDatePicker(datePicker, year, monthOfYear, dayOfMonth);
+                date = manageAddMeeting.getDateFromDatePicker(datePicker, year, monthOfYear, dayOfMonth);
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String result = formatter.format(date);
+                try {
+                    date = formatter.parse(result);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 mBinding.etDate.setText(result);
                 mBinding.tfDate.setErrorEnabled(false);
                 lastSelectedYear = year;
@@ -153,34 +152,9 @@ public class AddMeetingActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    //Convert String date to LocalDate
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void convertDate() {
-        mBinding.etDate.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                formatter = formatter.withLocale(Locale.FRANCE);
-                date = LocalDate.parse(mBinding.etDate.getText().toString(), formatter);
-            }
-        });
-    }
-
     //Display the date in the EditText to save it
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void saveTheDate() {
         manageAddMeeting.checkTheDateFormat(mBinding.etDate, mBinding.tfDate);
-        convertDate();
         manageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
         manageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
         manageAddMeeting.enableTheRoomSelection(mBinding.etDate, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
@@ -202,9 +176,10 @@ public class AddMeetingActivity extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                Date time = manageAddMeeting.getTimeFromTimePicker(timePicker, hourOfDay, minute);
+                Date dateTime = manageAddMeeting.getTimeFromTimePicker(timePicker, hourOfDay, minute);
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-                String result = formatter.format(time);
+                String result = formatter.format(dateTime);
+                time = result;
                 mBinding.etTime.setText(result);
                 mBinding.tfTime.setErrorEnabled(false);
                 lastSelectedHour = hourOfDay;
@@ -293,13 +268,12 @@ public class AddMeetingActivity extends AppCompatActivity {
                         room = mRoom;
                     }
                 }
-                Log.e("tag", date.toString());
                 //manageAddMeeting.saveTheRoom(openedRooms, mBinding.buttonRooms, room);
                 Meeting meeting = new Meeting(
                 "Réunion " + (mApiService.getMeetingList().size()+1),
                 room,
                 date,
-                mBinding.etTime.getText().toString(),
+                time,
                 mBinding.buttonDuration.getText().toString(),
                 collaboratorList,
                 mBinding.etTopic.getText().toString()
