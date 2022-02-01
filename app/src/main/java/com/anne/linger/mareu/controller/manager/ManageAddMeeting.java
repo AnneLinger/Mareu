@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -27,7 +26,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,13 +37,6 @@ public class ManageAddMeeting {
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final PopupUtils mPopupUtils = new PopupUtils();
     private static final ChipUtils mChipUtils = new ChipUtils();
-
-    //Recover the date from the DatePickerDialog
-    public static java.util.Date getDateFromDatePicker(int year, int month, int day){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        return calendar.getTime();
-    }
 
     //Listener on the date EditText to check the date format
     public void checkTheDateFormat(EditText editText, TextInputLayout textInputLayout) {
@@ -69,14 +60,6 @@ public class ManageAddMeeting {
                 }
             }
         });
-    }
-
-    //Recover the time from the TimePickerDialog
-    public static java.util.Date getTimeFromTimePicker(TimePicker timePicker){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-        return calendar.getTime();
     }
 
     //Listener on the time EditText to check the time format

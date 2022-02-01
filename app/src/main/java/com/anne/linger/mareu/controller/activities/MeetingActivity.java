@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ListAdapter;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.controller.adapters.ListMeetingAdapter;
@@ -30,6 +29,7 @@ import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.model.Room;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
+import com.anne.linger.mareu.utils.DateTimeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +49,7 @@ public class MeetingActivity extends AppCompatActivity {
     private static ActivityMeetingBinding mBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
+    private static final DateTimeUtils mDateTimeUtils = new DateTimeUtils();
     private static RecyclerView mRecyclerView;
     private static List<Meeting> mMeetingList;
     private int lastSelectedYear;
@@ -172,7 +173,7 @@ public class MeetingActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                date = getDateFromDatePicker(datePicker, year, monthOfYear, dayOfMonth);
+                date = mDateTimeUtils.getDateFromDatePicker(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String result = formatter.format(date);
                 try {
@@ -195,13 +196,6 @@ public class MeetingActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = null;
         datePickerDialog = new DatePickerDialog(this, dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDay);
         datePickerDialog.show();
-    }
-
-    //Recover the date from the DatePickerDialog
-    public static java.util.Date getDateFromDatePicker(DatePicker datePicker, int year, int month, int day){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        return calendar.getTime();
     }
 
     private void roomDialog() {

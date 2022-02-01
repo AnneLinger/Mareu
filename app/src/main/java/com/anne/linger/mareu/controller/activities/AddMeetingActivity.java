@@ -135,7 +135,6 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                 date = mDateTimeUtils.getDateFromDatePicker(year, monthOfYear, dayOfMonth);
-                //date = manageAddMeeting.getDateFromDatePicker(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String result = formatter.format(date);
                 try {
@@ -180,7 +179,6 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 Date dateTime = mDateTimeUtils.getTimeFromTimePicker(timePicker);
-                //Date dateTime = manageAddMeeting.getTimeFromTimePicker(timePicker);
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
                 String result = formatter.format(dateTime);
                 time = result;

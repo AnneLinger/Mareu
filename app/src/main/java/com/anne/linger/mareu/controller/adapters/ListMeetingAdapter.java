@@ -70,7 +70,7 @@ public class ListMeetingAdapter extends RecyclerView.Adapter<ListMeetingAdapter.
             super(itemView);
             circle = itemView.findViewById(R.id.im_circle);
             name = itemView.findViewById(R.id.tv_name);
-            startTime = itemView.findViewById(R.id.tv_start_time);
+            startTime = itemView.findViewById(R.id.tv_time);
             topic = itemView.findViewById(R.id.tv_topic);
             collaborators = itemView.findViewById(R.id.rv_collaborators);
             delete = itemView.findViewById(R.id.im_delete);
