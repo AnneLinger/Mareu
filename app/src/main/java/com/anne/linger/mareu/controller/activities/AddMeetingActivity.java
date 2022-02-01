@@ -28,6 +28,7 @@ import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.model.Room;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
+import com.anne.linger.mareu.utils.DateTimeUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,7 +45,8 @@ public class AddMeetingActivity extends AppCompatActivity {
     private static ActivityAddMeetingBinding mBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
-    private static final ManageAddMeeting manageAddMeeting = new ManageAddMeeting();
+    private static final ManageAddMeeting mManageAddMeeting = new ManageAddMeeting();
+    private static final DateTimeUtils mDateTimeUtils = new DateTimeUtils();
     private int lastSelectedYear;
     private int lastSelectedMonth;
     private int lastSelectedDay;
@@ -132,7 +134,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                date = manageAddMeeting.getDateFromDatePicker(datePicker, year, monthOfYear, dayOfMonth);
+                date = mDateTimeUtils.getDateFromDatePicker(year, monthOfYear, dayOfMonth);
+                //date = manageAddMeeting.getDateFromDatePicker(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String result = formatter.format(date);
                 try {
@@ -154,10 +157,10 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     //Display the date in the EditText to save it
     private void saveTheDate() {
-        manageAddMeeting.checkTheDateFormat(mBinding.etDate, mBinding.tfDate);
-        manageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
-        manageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
-        manageAddMeeting.enableTheRoomSelection(mBinding.etDate, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
+        mManageAddMeeting.checkTheDateFormat(mBinding.etDate, mBinding.tfDate);
+        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
+        mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
+        mManageAddMeeting.enableTheRoomSelection(mBinding.etDate, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
         enableButtonSave();
     }
 
@@ -176,7 +179,8 @@ public class AddMeetingActivity extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                Date dateTime = manageAddMeeting.getTimeFromTimePicker(timePicker, hourOfDay, minute);
+                Date dateTime = mDateTimeUtils.getTimeFromTimePicker(timePicker);
+                //Date dateTime = manageAddMeeting.getTimeFromTimePicker(timePicker);
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
                 String result = formatter.format(dateTime);
                 time = result;
@@ -192,22 +196,22 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     //Save the chosen time
     private void saveTheTime() {
-        manageAddMeeting.checkTheTimeFormat(mBinding.etTime, mBinding.tfTime);
-        manageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
-        manageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
-        manageAddMeeting.enableTheRoomSelection(mBinding.etTime, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
+        mManageAddMeeting.checkTheTimeFormat(mBinding.etTime, mBinding.tfTime);
+        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
+        mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
+        mManageAddMeeting.enableTheRoomSelection(mBinding.etTime, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
         enableButtonSave();
     }
 
     //Select a room
     private void selectARoom() {
-        manageAddMeeting.selectARoom(mBinding.buttonRooms, openedRooms);
+        mManageAddMeeting.selectARoom(mBinding.buttonRooms, openedRooms);
         enableButtonSave();
     }
 
     //Select a duration
     private void selectADuration() {
-        manageAddMeeting.chooseADuration(mBinding.buttonDuration, durationList);
+        mManageAddMeeting.chooseADuration(mBinding.buttonDuration, durationList);
         enableButtonSave();
     }
 
@@ -221,8 +225,8 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     //Add collaborators to collaborator list
     private void addCollaborator() {
-        manageAddMeeting.typeCollaborator(mBinding.etEnter, mBinding.btSaveCollaborator);
-        manageAddMeeting.saveCollaborator(mBinding.btSaveCollaborator, mBinding.etEnter, collaboratorList, mBinding.chipGroup);
+        mManageAddMeeting.typeCollaborator(mBinding.etEnter, mBinding.btSaveCollaborator);
+        mManageAddMeeting.saveCollaborator(mBinding.btSaveCollaborator, mBinding.etEnter, collaboratorList, mBinding.chipGroup);
         enableButtonSave();
     }
 

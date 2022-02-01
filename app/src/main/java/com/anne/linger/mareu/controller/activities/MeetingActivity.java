@@ -55,7 +55,6 @@ public class MeetingActivity extends AppCompatActivity {
     private int lastSelectedMonth;
     private int lastSelectedDay;
     private Date date;
-    private Room room;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TimePicker;
@@ -38,11 +37,11 @@ import java.util.List;
 public class ManageAddMeeting {
 
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
-    private static final PopupUtils popupUtils = new PopupUtils();
-    private static final ChipUtils chipUtils = new ChipUtils();
+    private static final PopupUtils mPopupUtils = new PopupUtils();
+    private static final ChipUtils mChipUtils = new ChipUtils();
 
     //Recover the date from the DatePickerDialog
-    public static java.util.Date getDateFromDatePicker(DatePicker datePicker, int year, int month, int day){
+    public static java.util.Date getDateFromDatePicker(int year, int month, int day){
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         return calendar.getTime();
@@ -73,7 +72,7 @@ public class ManageAddMeeting {
     }
 
     //Recover the time from the TimePickerDialog
-    public static java.util.Date getTimeFromTimePicker(TimePicker timePicker, int hourOfDay, int minute){
+    public static java.util.Date getTimeFromTimePicker(TimePicker timePicker){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
         calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
@@ -152,8 +151,8 @@ public class ManageAddMeeting {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = popupUtils.createPopupMenu(button.getContext(), button);
-                Menu menu = popupUtils.createMenu(popupMenu);
+                PopupMenu popupMenu = mPopupUtils.createPopupMenu(button.getContext(), button);
+                Menu menu = mPopupUtils.createMenu(popupMenu);
                 for (Room room : list){
                     menu.add(room.getName());
                 }
@@ -175,8 +174,8 @@ public class ManageAddMeeting {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = popupUtils.createPopupMenu(button.getContext(), button);
-                Menu menu = popupUtils.createMenu(popupMenu);
+                PopupMenu popupMenu = mPopupUtils.createPopupMenu(button.getContext(), button);
+                Menu menu = mPopupUtils.createMenu(popupMenu);
                 for (String string : list){
                     menu.add(string);
                 }
@@ -236,8 +235,8 @@ public class ManageAddMeeting {
                 chip.setOnCloseIconClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        chipUtils.deleteAChipFromAView((Chip) view);
-                        chipUtils.deleteAChipFromAList((Chip) view, list);
+                        mChipUtils.deleteAChipFromAView((Chip) view);
+                        mChipUtils.deleteAChipFromAList((Chip) view, list);
                     }
                 });
             }
