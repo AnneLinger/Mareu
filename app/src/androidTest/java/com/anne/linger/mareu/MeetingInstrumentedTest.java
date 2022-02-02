@@ -8,25 +8,17 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-
 import static com.anne.linger.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.notNullValue;
+
+import android.widget.DatePicker;
 
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.hamcrest.Matchers.notNullValue;
-
-import android.widget.DatePicker;
 
 import com.anne.linger.mareu.controller.activities.MeetingActivity;
 import com.anne.linger.mareu.di.DIMeeting;
@@ -35,6 +27,14 @@ import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
 import com.anne.linger.mareu.utils.DeleteViewAction;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -48,11 +48,10 @@ import java.util.List;
 public class MeetingInstrumentedTest {
 
     private MeetingApiService mApiService;
-    private RoomApiService mRoomApiService = DIRoom.getRoomApiService();
-    private static int ITEMS_COUNT = 0;
+    private final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
 
-    private List<String> mCollaboratorList = Arrays.asList("test@lamzone.com", "test2@lamzone.com");
-    private Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", "1 heure", mCollaboratorList, "Test");
+    private final List<String> mCollaboratorList = Arrays.asList("test@lamzone.com", "test2@lamzone.com");
+    private final Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", "1 heure", mCollaboratorList, "Test");
 
     @Rule
     public ActivityScenarioRule<MeetingActivity> mActivityScenarioRule = new ActivityScenarioRule<>(MeetingActivity.class);
@@ -74,6 +73,7 @@ public class MeetingInstrumentedTest {
         onView(ViewMatchers.withId(R.id.tv_time)).check(matches(isDisplayed()));
         onView(ViewMatchers.withId(R.id.tv_topic)).check(matches(isDisplayed()));
         onView(ViewMatchers.withId(R.id.rv_collaborators)).check(matches(isDisplayed()));
+        mApiService.deleteMeeting(mMeetingTest);
     }
 
     //Navigate to add a new meeting when the user clicks on the the add button
@@ -87,7 +87,8 @@ public class MeetingInstrumentedTest {
     @Test
     public void deleteAMeeting() {
         mApiService.addMeeting(mMeetingTest);
-        onView(ViewMatchers.withId(R.id.rv_meeting)).check(withItemCount(ITEMS_COUNT+1));
+        int ITEMS_COUNT = 0;
+        onView(ViewMatchers.withId(R.id.rv_meeting)).check(withItemCount(ITEMS_COUNT +1));
         onView(ViewMatchers.withId(R.id.rv_meeting)).perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
         onView(ViewMatchers.withId(R.id.rv_meeting)).check(withItemCount(ITEMS_COUNT));
     }
