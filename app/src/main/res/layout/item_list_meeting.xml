@@ -1,104 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/vertical_margin"
-    >
+    android:layout_marginVertical="@dimen/vertical_margin">
 
     <ImageView
         android:id="@+id/im_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
-    </ImageView>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/room_circle" />
 
     <TextView
         android:id="@+id/tv_name"
+        style="@style/ItemRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="60dp"
-        style="@style/ItemRecyclerView"
-        tools:text="@string/app_name"
-        >
-    </TextView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/app_name" />
 
     <TextView
         android:id="@+id/tv_first_hyphen"
+        style="@style/ItemRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_name"
-        android:layout_marginLeft="4dp"
-        style="@style/ItemRecyclerView"
+        android:layout_marginStart="4dp"
         android:text="@string/hyphen"
-        >
-    </TextView>
+        app:layout_constraintStart_toEndOf="@id/tv_name"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_time"
+        style="@style/ItemRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@id/tv_first_hyphen"
-        android:layout_marginLeft="4dp"
-        style="@style/ItemRecyclerView"
-        tools:text="@string/app_name"
-        >
-    </TextView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/app_name" />
 
     <TextView
         android:id="@+id/tv_second_hyphen"
+        style="@style/ItemRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_time"
-        android:layout_marginLeft="4dp"
-        style="@style/ItemRecyclerView"
+        android:layout_marginStart="4dp"
         android:text="@string/hyphen"
-        >
-    </TextView>
+        app:layout_constraintStart_toEndOf="@id/tv_time"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_topic"
+        style="@style/ItemRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="4dp"
         app:layout_constraintStart_toEndOf="@id/tv_second_hyphen"
-        android:layout_marginLeft="4dp"
-        style="@style/ItemRecyclerView"
-        tools:text="@string/app_name"
-        >
-    </TextView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/app_name" />
 
     <ImageView
         android:id="@+id/im_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_delete_24"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        >
-    </ImageView>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/trash_bin" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_collaborators"
         android:name="com.openclassrooms.entrevoisins.controller.activities.MeetingActivity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginHorizontal="60dp"
         app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:context=".controller.activities.MeetingActivity"
         tools:listitem="@layout/item_list_collaborators" />
 

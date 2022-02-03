@@ -1,12 +1,5 @@
 package com.anne.linger.mareu.controller.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -18,6 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.controller.adapters.ListMeetingAdapter;
@@ -131,11 +131,10 @@ public class MeetingActivity extends AppCompatActivity {
     }
 
     //Manage the filter icon color according to active or not
-    private void isFilterActive (Boolean active) {
+    private void isFilterActive(Boolean active) {
         if (active) {
             mBinding.tbMain.setOverflowIcon(getDrawable(R.drawable.ic_baseline_filter_list_yellow));
-        }
-        else {
+        } else {
             mBinding.tbMain.setOverflowIcon(getDrawable(R.drawable.ic_baseline_filter_list_24));
         }
     }
@@ -201,14 +200,14 @@ public class MeetingActivity extends AppCompatActivity {
     private void roomDialog() {
         //Setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Salles de réunion");
+        builder.setTitle(R.string.title_roomdialog);
 
         //Add a radio button list filled with room list
         List<String> roomList = new ArrayList<>();
         for (Room room : mRoomApiService.getRoomList()) {
             roomList.add(room.getName());
         }
-        roomList.add("Toutes les salles");
+        roomList.add(getString(R.string.all_rooms));
         String[] rooms = new String[11];
         roomList.toArray(rooms);
         int checkedItem = 10;
@@ -220,20 +219,19 @@ public class MeetingActivity extends AppCompatActivity {
                 if (item <= 9) {
                     initList(mApiService.getMeetingListByRoom(mRoomApiService.getRoomList().get(item).getName()));
                     isFilterActive(true);
-                }
-                else {
+                } else {
                     resetRoomDialog();
                 }
             }
         });
 
         //Add OK and Cancel buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 resetRoomDialog();
@@ -259,7 +257,6 @@ public class MeetingActivity extends AppCompatActivity {
     @Subscribe
     //Delete a meeting
     public void deleteMeeting(DeleteMeetingEvent event) {
-        Log.e("tag", event.meeting.toString());
         mApiService.deleteMeeting(event.meeting);
         initList();
     }

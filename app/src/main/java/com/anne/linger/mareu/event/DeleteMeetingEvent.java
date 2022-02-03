@@ -3,16 +3,17 @@ package com.anne.linger.mareu.event;
 import com.anne.linger.mareu.model.Meeting;
 
 /**
-*Event called when a user wants to delete a meeting
-*/
+ * Event called when a user wants to delete a meeting
+ */
 public class DeleteMeetingEvent {
     /**
      * Meeting to delete
      */
-    public Meeting meeting;
+    public final Meeting meeting;
 
     /**
-     * Constructor.
+     * Constructor
+     *
      * @param meeting
      */
     public DeleteMeetingEvent(Meeting meeting) {

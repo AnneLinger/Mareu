@@ -38,11 +38,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
-*Activity to add a new meeting to the recycler view
-*/
+ * Activity to add a new meeting to the recycler view
+ */
 public class AddMeetingActivity extends AppCompatActivity {
 
-    private static ActivityAddMeetingBinding mBinding;
+    private ActivityAddMeetingBinding mBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
     private static final ManageAddMeeting mManageAddMeeting = new ManageAddMeeting();
@@ -50,15 +50,15 @@ public class AddMeetingActivity extends AppCompatActivity {
     private int lastSelectedYear;
     private int lastSelectedMonth;
     private int lastSelectedDay;
-    private boolean is24HView = true;
+    private final boolean is24HView = true;
     private int lastSelectedHour;
     private int lastSelectedMinute;
     public Date date;
     private String time;
-    private List<String> durationList = mApiService.getDummyDurationList();
-    private List<Room> openedRooms = mRoomApiService.getRoomList();
+    private final List<String> durationList = mApiService.getDummyDurationList();
+    private final List<Room> openedRooms = mRoomApiService.getRoomList();
     private Room room;
-    private List<String> collaboratorList = new ArrayList<>();
+    private final List<String> collaboratorList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,17 +81,17 @@ public class AddMeetingActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if ( v instanceof EditText) {
+            if (v instanceof EditText) {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         }
-        return super.dispatchTouchEvent( event );
+        return super.dispatchTouchEvent(event);
     }
 
     //Configure the UI
@@ -114,7 +114,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     //Select the date in the DatePickerDialog
-    private void selectDate(){
+    private void selectDate() {
         mBinding.tfDate.setStartIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,7 +157,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     //Display the date in the EditText to save it
     private void saveTheDate() {
         mManageAddMeeting.checkTheDateFormat(mBinding.etDate, mBinding.tfDate);
-        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
+        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms);
         mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
         mManageAddMeeting.enableTheRoomSelection(mBinding.etDate, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
         enableButtonSave();
@@ -188,14 +188,14 @@ public class AddMeetingActivity extends AppCompatActivity {
                 lastSelectedMinute = minute;
             }
         };
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener,lastSelectedHour, lastSelectedMinute, is24HView);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener, lastSelectedHour, lastSelectedMinute, is24HView);
         timePickerDialog.show();
     }
 
     //Save the chosen time
     private void saveTheTime() {
         mManageAddMeeting.checkTheTimeFormat(mBinding.etTime, mBinding.tfTime);
-        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms, AddMeetingActivity.this);
+        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms);
         mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
         mManageAddMeeting.enableTheRoomSelection(mBinding.etTime, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
         enableButtonSave();
@@ -216,8 +216,8 @@ public class AddMeetingActivity extends AppCompatActivity {
     //Autocomplete the EditText for collaborators
     private void configureAutoCompleteCollaborator() {
         AutoCompleteTextView autoCompleteTextView = mBinding.etEnter;
-        List<String> collaborators =  mApiService.getDummyCollaboratorList();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, collaborators);
+        List<String> collaborators = mApiService.getDummyCollaboratorList();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, collaborators);
         autoCompleteTextView.setAdapter(adapter);
     }
 
@@ -234,9 +234,11 @@ public class AddMeetingActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
                 enableButtonSave();
@@ -246,15 +248,14 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     //The button save is enabled only when all fields are filled
     private void enableButtonSave() {
-        if(mBinding.etDate.getText().toString().isEmpty() ||
+        if (mBinding.etDate.getText().toString().isEmpty() ||
                 mBinding.etTime.getText().toString().isEmpty() ||
-                mBinding.buttonDuration.getText().toString().contains("définir") ||
-                mBinding.buttonRooms.getText().toString().contains("définir") ||
+                mBinding.buttonDuration.getText().toString().contains(getString(R.string.check_duration_button)) ||
+                mBinding.buttonRooms.getText().toString().contains(getString(R.string.check_room_button)) ||
                 mBinding.chipGroup.getChildCount() < 2 ||
                 mBinding.etTopic.getText().toString().isEmpty()) {
             mBinding.buttonSave.setEnabled(false);
-        }
-        else {
+        } else {
             mBinding.buttonSave.setEnabled(true);
             mBinding.buttonSave.setBackgroundColor(getResources().getColor(R.color.red));
         }
@@ -265,20 +266,20 @@ public class AddMeetingActivity extends AppCompatActivity {
         mBinding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (Room mRoom : openedRooms){
-                    if(mBinding.buttonRooms.getText().toString().equals(mRoom.getName())){
+                for (Room mRoom : openedRooms) {
+                    if (mBinding.buttonRooms.getText().toString().equals(mRoom.getName())) {
                         room = mRoom;
                     }
                 }
                 //manageAddMeeting.saveTheRoom(openedRooms, mBinding.buttonRooms, room);
                 Meeting meeting = new Meeting(
-                "Réunion " + (mApiService.getMeetingList().size()+1),
-                room,
-                date,
-                time,
-                mBinding.buttonDuration.getText().toString(),
-                collaboratorList,
-                mBinding.etTopic.getText().toString()
+                        "Réunion " + (mApiService.getMeetingList().size() + 1),
+                        room,
+                        date,
+                        time,
+                        mBinding.buttonDuration.getText().toString(),
+                        collaboratorList,
+                        mBinding.etTopic.getText().toString()
                 );
                 mApiService.addMeeting(meeting);
                 finish();

@@ -1,22 +1,19 @@
 package com.anne.linger.mareu.services.meeting;
 
-import android.util.Log;
-
 import com.anne.linger.mareu.model.Meeting;
-import com.anne.linger.mareu.model.Room;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
-*Implements the meeting interface
-*/
+ * Implements the meeting interface
+ */
 public class NewMeetingApiService implements MeetingApiService {
 
-    public List<Meeting> meetingList = new ArrayList();
-    public List<String> dummyCollaboratorList =  DummyCollaboratorGenerator.generateCollaborators();
-    public List<String> dummyDurationList = DummyDurationGenerator.generateDurations();
+    public final List<Meeting> meetingList = new ArrayList();
+    public final List<String> dummyCollaboratorList = DummyCollaboratorGenerator.generateCollaborators();
+    public final List<String> dummyDurationList = DummyDurationGenerator.generateDurations();
 
     @Override
     public List<Meeting> getMeetingList() {

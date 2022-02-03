@@ -11,8 +11,8 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 
 /**
-*Created by Anne Linger on 31/01/2022.
-*/
+ * Created by Anne Linger on 31/01/2022.
+ */
 public class RecyclerViewItemCountAssertion implements ViewAssertion {
     private final Matcher<Integer> matcher;
 

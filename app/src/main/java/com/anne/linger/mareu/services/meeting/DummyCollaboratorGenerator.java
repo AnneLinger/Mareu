@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-* Generates a dummy list of collaborators
+ * Generates a dummy list of collaborators
  */
 public abstract class DummyCollaboratorGenerator {
 
-    public static List<String> DUMMY_COLLABORATORS = Arrays.asList(
+    public static final List<String> DUMMY_COLLABORATORS = Arrays.asList(
             "adam@lamzone.com",
             "caroline@lamzone.com",
             "karl@lamzone.com",
@@ -24,7 +24,7 @@ public abstract class DummyCollaboratorGenerator {
             "thomas@lamzone.com"
     );
 
-    static List<String> generateCollaborators(){
+    static List<String> generateCollaborators() {
         return new ArrayList<>(DUMMY_COLLABORATORS);
     }
 }

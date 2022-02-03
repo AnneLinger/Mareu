@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
-*Model class for a meeting
-*/
+ * Model class for a meeting
+ */
 public class Meeting {
     private String name;
     private Room room;
@@ -72,6 +72,7 @@ public class Meeting {
     public void setCollaborators(List<String> collaborators) {
         this.collaborators = collaborators;
     }
+
     public String getTopic() {
         return topic;
     }

@@ -1,15 +1,13 @@
 package com.anne.linger.mareu.utils;
 
-import android.view.View;
-
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
 /**
-*Useful methods for chips
-*/
+ * Useful methods for chips
+ */
 public class ChipUtils {
     //Remove a chip from a view
     public void deleteAChipFromAView(Chip chip) {

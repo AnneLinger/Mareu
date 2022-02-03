@@ -4,15 +4,14 @@ import android.view.View;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
-import android.content.Context;
 
 import com.anne.linger.mareu.R;
 
 import org.hamcrest.Matcher;
 
 /**
-*Created by Anne Linger on 31/01/2022.
-*/
+ * Created by Anne Linger on 31/01/2022.
+ */
 public class DeleteViewAction implements ViewAction {
     @Override
     public Matcher<View> getConstraints() {

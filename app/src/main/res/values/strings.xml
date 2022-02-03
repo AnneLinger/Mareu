@@ -21,4 +21,20 @@
     <string name="duration">Durée à définir</string>
     <string name="meeting">Réunion</string>
     <string name="allRoomsReserved">Toutes les salles sont réservées, merci de choisir un autre horaire</string>
+    <string name="check_duration_button">définir</string>
+    <string name="check_room_button">définir</string>
+    <string name="title_roomdialog">Salles de réunion</string>
+    <string name="all_rooms">Toutes les salles</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+    <string name="date_filter">Filtrer par date</string>
+    <string name="room_filter">Filtrer par salle</string>
+    <string name="meeting_rooms">Salles de réunion</string>
+    <string name="calendar">Calendrier</string>
+    <string name="timer">Horloge</string>
+    <string name="room_circle">Room circle</string>
+    <string name="trash_bin">trash bin</string>
+    <string name="filter_by_date">Filtrer par date</string>
+    <string name="filter_by_room">Filtrer par salle</string>
+    <string name="reset_filters">Supprimer les filtres</string>
 </resources>

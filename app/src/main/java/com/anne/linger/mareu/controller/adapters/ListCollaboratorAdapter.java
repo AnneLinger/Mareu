@@ -16,12 +16,12 @@ import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import java.util.List;
 
 /**
- *Adapter and ViewHolder to display an horizontal recycler view for collaborators
+ * Adapter and ViewHolder to display an horizontal recycler view for collaborators
  */
-public class ListCollaboratorAdapter extends RecyclerView.Adapter<ListCollaboratorAdapter.ViewHolder>{
+public class ListCollaboratorAdapter extends RecyclerView.Adapter<ListCollaboratorAdapter.ViewHolder> {
 
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
-    private static Meeting meeting = mApiService.getMeetingList().get(0);
+    private static final Meeting meeting = mApiService.getMeetingList().get(0);
     private static List<String> mCollaborators = meeting.getCollaborators();
 
     public ListCollaboratorAdapter(List<String> collaborators) {
@@ -46,7 +46,7 @@ public class ListCollaboratorAdapter extends RecyclerView.Adapter<ListCollaborat
         return mCollaborators.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mail;
 

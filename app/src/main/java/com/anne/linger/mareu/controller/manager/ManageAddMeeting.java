@@ -30,8 +30,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
-*Class to manage creation of a new meeting (for AddMeetingActivity)
-*/
+ * Class to manage creation of a new meeting (for AddMeetingActivity)
+ */
 public class ManageAddMeeting {
 
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
@@ -54,8 +54,7 @@ public class ManageAddMeeting {
             public void afterTextChanged(Editable editable) {
                 if (!editText.getText().toString().matches("([0-9]{2}/([0-9]{2})/([0-9]{4}))")) {
                     editText.setError("Veuillez entrer un format JJ/MM/AAAA");
-                }
-                else{
+                } else {
                     textInputLayout.setErrorEnabled(false);
                 }
             }
@@ -77,8 +76,7 @@ public class ManageAddMeeting {
             public void afterTextChanged(Editable editable) {
                 if (!editText.getText().toString().matches("[0-9]{2}[:][0-9]{2}")) {
                     editText.setError("Veuillez entrer un format HH:MM");
-                }
-                else{
+                } else {
                     textInputLayout.setErrorEnabled(false);
                 }
             }
@@ -111,12 +109,11 @@ public class ManageAddMeeting {
     }
 
     //Select rooms which are opened according to date and time meeting
-    public void checkOpenedRooms(Date date, String time, List<Room> list, Context context) {
+    public void checkOpenedRooms(Date date, String time, List<Room> list) {
         for (Meeting meeting : mApiService.getMeetingList()) {
             if (meeting.getDate().equals(date) && meeting.getTime().equals(time)) {
                 list.remove(meeting.getRoom());
-            }
-            else if (!list.contains(meeting.getRoom())){
+            } else if (!list.contains(meeting.getRoom())) {
                 list.add(meeting.getRoom());
             }
         }
@@ -124,7 +121,7 @@ public class ManageAddMeeting {
 
     //Advertising if all rooms are reserved
     public void allRoomsReserved(List<Room> list, Context context) {
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             Toast.makeText(context, R.string.allRoomsReserved, Toast.LENGTH_SHORT).show();
         }
     }
@@ -136,7 +133,7 @@ public class ManageAddMeeting {
             public void onClick(View view) {
                 PopupMenu popupMenu = mPopupUtils.createPopupMenu(button.getContext(), button);
                 Menu menu = mPopupUtils.createMenu(popupMenu);
-                for (Room room : list){
+                for (Room room : list) {
                     menu.add(room.getName());
                 }
                 popupMenu.show();
@@ -159,7 +156,7 @@ public class ManageAddMeeting {
             public void onClick(View view) {
                 PopupMenu popupMenu = mPopupUtils.createPopupMenu(button.getContext(), button);
                 Menu menu = mPopupUtils.createMenu(popupMenu);
-                for (String string : list){
+                for (String string : list) {
                     menu.add(string);
                 }
                 popupMenu.show();
@@ -176,7 +173,7 @@ public class ManageAddMeeting {
     }
 
     //Listener to type a collaborator
-    public void typeCollaborator(EditText editText, Button button){
+    public void typeCollaborator(EditText editText, Button button) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -192,8 +189,7 @@ public class ManageAddMeeting {
                 String string = editText.getText().toString();
                 if (!string.matches("^(.+)@lamzone.com")) {
                     editText.setError("Veuillez entrer un format nom@lamzone.com");
-                }
-                else{
+                } else {
                     button.setEnabled(true);
                 }
             }

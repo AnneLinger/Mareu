@@ -1,16 +1,18 @@
 package com.anne.linger.mareu;
 
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import com.anne.linger.mareu.di.DIMeeting;
 import com.anne.linger.mareu.di.DIRoom;
 import com.anne.linger.mareu.model.Meeting;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
+
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,14 +25,14 @@ import java.util.Locale;
  */
 public class MeetingUnitTest {
     private MeetingApiService mApiService;
-    private final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
+    private final RoomApiService mRoomApiService = DIRoom.getNewInstanceRoomApiService();
 
     private final List<String> mCollaboratorList = Arrays.asList("test@lamzone.com", "test2@lamzone.com");
     private final Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", "1 heure", mCollaboratorList, "Test");
 
     @Before
     public void setup() {
-        mApiService = DIMeeting.getMeetingApiService();
+        mApiService = DIMeeting.getNewInstanceMeetingApiService();
     }
 
     //Get the meeting list
@@ -48,7 +50,6 @@ public class MeetingUnitTest {
 
         //Compare the two lists to prove that they are uniform
         assertThat(meetingList, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedList.toArray()));
-        mApiService.deleteMeeting(mMeetingTest);
     }
 
     //Add a meeting to the list
@@ -63,7 +64,6 @@ public class MeetingUnitTest {
 
         //The meeting list is no longer empty
         assertFalse(meetingList.isEmpty());
-        mApiService.deleteMeeting(mMeetingTest);
     }
 
     //Delete a meeting from the list
@@ -99,7 +99,6 @@ public class MeetingUnitTest {
 
         //The meeting list is empty now
         assertTrue(meetingListByDate.isEmpty());
-        mApiService.deleteMeeting(mMeetingTest);
     }
 
     //Filter meetings by room
@@ -119,6 +118,5 @@ public class MeetingUnitTest {
 
         //The meeting list is empty now
         assertTrue(meetingListByRoom.isEmpty());
-        mApiService.deleteMeeting(mMeetingTest);
     }
 }

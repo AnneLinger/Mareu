@@ -1,7 +1,6 @@
 package com.anne.linger.mareu.services.meeting;
 
 import com.anne.linger.mareu.model.Meeting;
-import com.anne.linger.mareu.model.Room;
 
 import java.util.Date;
 import java.util.List;
@@ -18,24 +17,28 @@ public interface MeetingApiService {
 
     /**
      * Add a meeting
+     *
      * @param meeting
      */
     void addMeeting(Meeting meeting);
 
     /**
      * Remove a meeting
+     *
      * @param meeting
      */
     void deleteMeeting(Meeting meeting);
 
     /**
      * Filter meetings by date
+     *
      * @param date
      */
     List<Meeting> getMeetingListByDate(Date date);
 
     /**
      * Filter meetings by room
+     *
      * @param roomName
      */
     List<Meeting> getMeetingListByRoom(String roomName);

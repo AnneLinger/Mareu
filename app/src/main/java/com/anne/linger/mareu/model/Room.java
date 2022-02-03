@@ -1,7 +1,8 @@
 package com.anne.linger.mareu.model;
+
 /**
-*Model class for a room
-*/
+ * Model class for a room
+ */
 public class Room {
     private String name;
     private int drawable;

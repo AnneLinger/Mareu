@@ -14,7 +14,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import android.widget.DatePicker;
 
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -30,7 +29,6 @@ import com.anne.linger.mareu.utils.DeleteViewAction;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -88,7 +86,7 @@ public class MeetingInstrumentedTest {
     public void deleteAMeeting() {
         mApiService.addMeeting(mMeetingTest);
         int ITEMS_COUNT = 0;
-        onView(ViewMatchers.withId(R.id.rv_meeting)).check(withItemCount(ITEMS_COUNT +1));
+        onView(ViewMatchers.withId(R.id.rv_meeting)).check(withItemCount(ITEMS_COUNT + 1));
         onView(ViewMatchers.withId(R.id.rv_meeting)).perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
         onView(ViewMatchers.withId(R.id.rv_meeting)).check(withItemCount(ITEMS_COUNT));
     }
@@ -97,7 +95,7 @@ public class MeetingInstrumentedTest {
     @Test
     public void showDatePickerToFilterTheListByDate() {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        onView(ViewMatchers.withText("Filtrer par date")).perform(click());
+        onView(ViewMatchers.withText(R.string.date_filter)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).check(matches(isDisplayed()));
     }
 
@@ -105,7 +103,7 @@ public class MeetingInstrumentedTest {
     @Test
     public void showRoomListToFilterTheListByRoom() {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        onView(ViewMatchers.withText("Filtrer par salle")).perform(click());
-        onView(withText("Salles de réunion")).check(matches(isDisplayed()));
+        onView(ViewMatchers.withText(R.string.room_filter)).perform(click());
+        onView(withText(R.string.meeting_rooms)).check(matches(isDisplayed()));
     }
 }

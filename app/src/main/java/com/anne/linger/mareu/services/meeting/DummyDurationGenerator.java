@@ -5,10 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-*Generates a dummy list of rooms
-*/public abstract class DummyDurationGenerator {
+ * Generates a dummy list of rooms
+ */
+public abstract class DummyDurationGenerator {
 
-    public static List<String> DUMMY_DURATIONS = Arrays.asList(
+    public static final List<String> DUMMY_DURATIONS = Arrays.asList(
             "30 minutes",
             "1 heure",
             "1 heure 30 minutes",
@@ -19,7 +20,7 @@ import java.util.List;
             "4 heures"
     );
 
-    static List<String> generateDurations(){
+    static List<String> generateDurations() {
         return new ArrayList<>(DUMMY_DURATIONS);
     }
 }
