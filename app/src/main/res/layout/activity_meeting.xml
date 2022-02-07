@@ -24,11 +24,10 @@
         android:id="@+id/rv_meeting"
         android:name="com.openclassrooms.entrevoisins.controller.activities.MeetingActivity"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="12dp"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tb_main"
         tools:context=".controller.activities.MeetingActivity"
         tools:listitem="@layout/item_list_meeting" />
@@ -42,6 +41,7 @@
         android:contentDescription="@string/fab_content_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="@dimen/size_image"
         app:srcCompat="@drawable/ic_baseline_add_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

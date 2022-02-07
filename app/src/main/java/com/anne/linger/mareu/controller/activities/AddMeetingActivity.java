@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Activity to add a new meeting to the recycler view
  */
-public class AddMeetingActivity extends AppCompatActivity {
+public class AddMeetingActivity extends ManageAddMeeting {
 
     private ActivityAddMeetingBinding mBinding;
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();

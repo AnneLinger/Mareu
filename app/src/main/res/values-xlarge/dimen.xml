@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vertical_margin">48dp</dimen>
+    <dimen name="horizontal_margin">96dp</dimen>
+    <dimen name="top_margin">96dp</dimen>
+    <dimen name="bottom_margin">96dp</dimen>
+    <dimen name="left_margin">96dp</dimen>
+    <dimen name="right_margin">96dp</dimen>
+    <dimen name="item_margin">72dp</dimen>
+    <dimen name="item_height">64dp</dimen>
+    <dimen name="text_size">24sp</dimen>
+    <dimen name="title_size">30sp</dimen>
+    <dimen name="size_image">32dp</dimen>
+    <dimen name="min_width_date">352dp</dimen>
+    <dimen name="min_width_time">256dp</dimen>
+    <dimen name="max_width_date">496dp</dimen>
+    <dimen name="max_width_time">320dp</dimen>
+    <dimen name="min_width_collaborator">416dp</dimen>
+    <dimen name="max_width_collaborator">448dp</dimen>
+</resources>

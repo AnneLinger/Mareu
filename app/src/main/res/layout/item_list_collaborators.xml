@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/text_size"
         tools:text="@string/collaborator_error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

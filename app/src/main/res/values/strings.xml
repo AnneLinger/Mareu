@@ -37,4 +37,7 @@
     <string name="filter_by_date">Filtrer par date</string>
     <string name="filter_by_room">Filtrer par salle</string>
     <string name="reset_filters">Supprimer les filtres</string>
+    <string name="topic_meeting">Sujet de la réunion</string>
+    <string name="time">Heure</string>
+    <string name="date">Date</string>
 </resources>

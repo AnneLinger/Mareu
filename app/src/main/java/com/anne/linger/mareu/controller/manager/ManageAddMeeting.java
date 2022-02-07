@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.di.DIMeeting;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Class to manage creation of a new meeting (for AddMeetingActivity)
  */
-public class ManageAddMeeting {
+public class ManageAddMeeting extends AppCompatActivity {
 
     private static final MeetingApiService mApiService = DIMeeting.getMeetingApiService();
     private static final PopupUtils mPopupUtils = new PopupUtils();
