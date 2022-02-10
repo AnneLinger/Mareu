@@ -5,7 +5,7 @@
     android:id="@+id/cl_add_meeting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".controller.activities.AddMeetingActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -26,10 +26,10 @@
         android:id="@+id/cl_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginTop="@dimen/top_margin"
-        android:layout_marginBottom="@dimen/vertical_margin"
-        app:layout_constraintBottom_toTopOf="@id/button_rooms"
+        android:layout_marginHorizontal="@dimen/horizontal_margin_land"
+        android:layout_marginTop="@dimen/top_margin_land"
+        android:layout_marginBottom="@dimen/vertical_margin_land"
+        app:layout_constraintBottom_toTopOf="@id/tf_collaborators"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tb_add">
@@ -42,8 +42,8 @@
             android:layout_marginEnd="8dp"
             android:background="@color/lightgrey"
             android:hint="@string/date"
-            android:maxWidth="@dimen/max_width_date"
-            android:minWidth="@dimen/min_width_date"
+            android:maxWidth="@dimen/max_width_date_land"
+            android:minWidth="@dimen/min_width_date_land"
             app:endIconMode="custom"
             app:layout_constraintEnd_toStartOf="@id/tf_time"
             app:layout_constraintRight_toLeftOf="@id/tf_time"
@@ -57,7 +57,7 @@
                 android:id="@+id/et_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
+                android:imeOptions="flagNoExtractUi"
                 android:inputType="date"
                 android:textSize="@dimen/text_size" />
 
@@ -67,14 +67,13 @@
             android:id="@+id/tf_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginHorizontal="@dimen/horizontal_margin_land"
             android:background="@color/lightgrey"
             android:hint="@string/time"
             android:maxWidth="@dimen/max_width_time"
             android:minWidth="@dimen/min_width_time"
             app:errorEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_rooms"
             app:layout_constraintLeft_toRightOf="@id/tf_date"
             app:layout_constraintStart_toEndOf="@id/tf_date"
             app:layout_constraintTop_toTopOf="parent"
@@ -86,54 +85,59 @@
                 android:id="@+id/et_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
+                android:imeOptions="flagNoExtractUi"
                 android:inputType="datetime"
                 android:textSize="@dimen/text_size" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/button_rooms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="@dimen/vertical_margin_land"
+            android:background="@color/lightgrey"
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+            android:maxWidth="@dimen/max_width_room_land"
+            android:minWidth="@dimen/min_width_room_land"
+            android:text="@string/room"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size"
+            android:theme="@style/AppTheme"
+            app:layout_constraintBottom_toBottomOf="@id/tf_time"
+            app:layout_constraintEnd_toStartOf="@id/button_duration"
+            app:layout_constraintLeft_toRightOf="@id/tf_time"
+            app:layout_constraintStart_toEndOf="@id/tf_time"
+            app:layout_constraintTop_toTopOf="@id/tf_time" />
+
+        <Button
+            android:id="@+id/button_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/vertical_margin_land"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/lightgrey"
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+            android:text="@string/duration"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size"
+            android:theme="@style/AppTheme"
+            app:layout_constraintBottom_toBottomOf="@id/tf_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/button_rooms"
+            app:layout_constraintStart_toEndOf="@id/button_rooms"
+            app:layout_constraintTop_toTopOf="@id/tf_time" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button_rooms"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"
-        android:background="@color/lightgrey"
-        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-        android:text="@string/room"
-        android:textAllCaps="false"
-        android:textSize="@dimen/text_size"
-        android:theme="@style/AppTheme"
-        app:layout_constraintBottom_toTopOf="@+id/button_duration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_time" />
-
-    <Button
-        android:id="@+id/button_duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"
-        android:background="@color/lightgrey"
-        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-        android:text="@string/duration"
-        android:textAllCaps="false"
-        android:textSize="@dimen/text_size"
-        android:theme="@style/AppTheme"
-        app:layout_constraintBottom_toTopOf="@+id/tf_collaborators"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_rooms" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_collaborators"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/left_margin"
-        android:layout_marginTop="@dimen/top_margin"
+        android:layout_marginTop="@dimen/top_margin_land"
         android:background="@color/lightgrey"
         android:hint="@string/textAdd"
         android:inputType="text"
@@ -142,13 +146,14 @@
         app:layout_constraintBottom_toTopOf="@+id/chip_group"
         app:layout_constraintEnd_toStartOf="@id/bt_save_collaborator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_duration">
+        app:layout_constraintTop_toBottomOf="@id/cl_time">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/et_enter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
+            android:imeOptions="flagNoExtractUi"
             android:textSize="@dimen/text_size" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -170,7 +175,7 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
         app:layout_constraintStart_toStartOf="parent"
@@ -197,7 +202,7 @@
             android:id="@+id/et_topic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:imeOptions="actionDone"
+            android:imeOptions="flagNoExtractUi"
             android:inputType="textCapWords"
             android:textSize="@dimen/text_size" />
 
@@ -209,7 +214,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"
+        android:layout_marginVertical="@dimen/vertical_margin_land"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size"

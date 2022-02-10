@@ -13,8 +13,7 @@ public abstract class DummyDurationGenerator {
             "30 minutes",
             "1 heure",
             "1 heure 30 minutes",
-            "2 heures"
-    );
+            "2 heures");
 
     static List<String> generateDurations() {
         return new ArrayList<>(DUMMY_DURATIONS);

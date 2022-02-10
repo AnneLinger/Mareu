@@ -273,7 +273,7 @@ public class AddMeetingActivity extends ManageAddMeeting {
                 }
                 //manageAddMeeting.saveTheRoom(openedRooms, mBinding.buttonRooms, room);
                 Meeting meeting = new Meeting(
-                        "Réunion " + (mApiService.getMeetingList().size() + 1),
+                        getString(R.string.meeting_name) + (mApiService.getMeetingList().size() + 1),
                         room,
                         date,
                         time,

@@ -1,5 +1,6 @@
 package com.anne.linger.mareu.utils;
 
+import android.content.res.Resources;
 import android.view.View;
 
 import androidx.test.espresso.UiController;
@@ -20,7 +21,7 @@ public class DeleteViewAction implements ViewAction {
 
     @Override
     public String getDescription() {
-        return "Click on specific button";
+        return Resources.getSystem().getString(R.string.delete_description);
     }
 
     @Override

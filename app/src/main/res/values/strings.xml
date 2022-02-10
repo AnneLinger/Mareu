@@ -8,8 +8,6 @@
     <string name="meeting_topic">Sujet</string>
     <string name="room">Salle à définir</string>
     <string name="room_selected">Salle sélectionnée : </string>
-    <string name="date_error">Veuillez entrer un format JJ/MM/AAAA</string>
-    <string name="time_error">Veuillez entrer un format HH:MM</string>
     <string name="collaborator_error">Veuillez entrer un format nom@lamzone.com</string>
     <string name="hyphen">-</string>
     <string name="save">Enregistrer</string>
@@ -40,4 +38,6 @@
     <string name="topic_meeting">Sujet de la réunion</string>
     <string name="time">Heure</string>
     <string name="date">Date</string>
+    <string name="meeting_name">Réunion\u0020</string>
+    <string name="delete_description">Click on specific button</string>
 </resources>

@@ -11,10 +11,10 @@
         android:id="@+id/im_circle"
         android:layout_width="@dimen/size_image"
         android:layout_height="@dimen/size_image"
+        android:contentDescription="@string/room_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/room_circle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -33,8 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:textSize="@dimen/text_size"
         android:text="@string/hyphen"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toEndOf="@id/tv_name"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,8 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:textSize="@dimen/text_size"
         android:text="@string/hyphen"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toEndOf="@id/tv_time"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,11 +75,11 @@
         android:id="@+id/im_delete"
         android:layout_width="@dimen/size_image"
         android:layout_height="@dimen/size_image"
+        android:contentDescription="@string/trash_bin"
         android:src="@drawable/ic_baseline_delete_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/trash_bin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_collaborators"

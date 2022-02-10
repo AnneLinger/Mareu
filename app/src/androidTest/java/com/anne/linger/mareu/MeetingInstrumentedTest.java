@@ -11,6 +11,7 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static com.anne.linger.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.notNullValue;
 
+import android.content.res.Resources;
 import android.widget.DatePicker;
 
 import androidx.test.core.app.ActivityScenario;

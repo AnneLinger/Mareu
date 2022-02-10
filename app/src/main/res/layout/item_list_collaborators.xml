@@ -10,9 +10,9 @@
         android:id="@+id/tv_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="@dimen/text_size"
         tools:text="@string/collaborator_error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
