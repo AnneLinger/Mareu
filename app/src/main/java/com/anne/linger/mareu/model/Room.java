@@ -1,14 +1,15 @@
 package com.anne.linger.mareu.model;
+
 /**
-*Created by Anne Linger on 21/12/2021.
-*/
+ * Model class for a room
+ */
 public class Room {
     private String name;
-    private Boolean isReserved;
+    private int drawable;
 
-    public Room(String name, Boolean isReserved) {
+    public Room(String name, int drawable) {
         this.name = name;
-        this.isReserved = isReserved;
+        this.drawable = drawable;
     }
 
     public String getName() {
@@ -19,11 +20,12 @@ public class Room {
         this.name = name;
     }
 
-    public Boolean getReserved() {
-        return isReserved;
+    public int getDrawable() {
+        return drawable;
     }
 
-    public void setReserved(Boolean reserved) {
-        isReserved = reserved;
+    public void setDrawable(int drawable) {
+        this.drawable = drawable;
     }
+
 }

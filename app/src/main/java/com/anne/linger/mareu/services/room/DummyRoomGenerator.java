@@ -1,5 +1,6 @@
 package com.anne.linger.mareu.services.room;
 
+import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.model.Room;
 
 import java.util.ArrayList;
@@ -7,21 +8,21 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 21/12/2021.
-*/
+ * Generates a list of dummy rooms
+ */
 public abstract class DummyRoomGenerator {
 
-    public static List<Room> DUMMY_ROOMS = Arrays.asList(
-            new Room("Salle A", false),
-            new Room("Salle B", false),
-            new Room("Salle C", false),
-            new Room("Salle D", false),
-            new Room("Salle E", false),
-            new Room("Salle F", false),
-            new Room("Salle G", false),
-            new Room("Salle H", false),
-            new Room("Salle I", false),
-            new Room("Salle J", false)
+    public static final List<Room> DUMMY_ROOMS = Arrays.asList(
+            new Room("Salle bleue", R.drawable.blue_circle),
+            new Room("Salle grise", R.drawable.grey_circle),
+            new Room("Salle jaune", R.drawable.yellow_circle),
+            new Room("Salle marron", R.drawable.brown_circle),
+            new Room("Salle orange", R.drawable.orange_circle),
+            new Room("Salle rose", R.drawable.pink_circle),
+            new Room("Salle rouge", R.drawable.red_circle),
+            new Room("Salle turquoise", R.drawable.turquoise_circle),
+            new Room("Salle verte", R.drawable.green_circle),
+            new Room("Salle violette", R.drawable.purple_circle)
     );
 
     static List<Room> generateRooms() {

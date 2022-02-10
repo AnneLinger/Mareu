@@ -2,10 +2,11 @@ package com.anne.linger.mareu.services.meeting;
 
 import com.anne.linger.mareu.model.Meeting;
 
+import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Anne Linger on 20/12/2021.
+ * Interface to manage the meeting lists
  */
 public interface MeetingApiService {
 
@@ -16,18 +17,39 @@ public interface MeetingApiService {
 
     /**
      * Add a meeting
+     *
      * @param meeting
      */
     void addMeeting(Meeting meeting);
 
     /**
      * Remove a meeting
+     *
      * @param meeting
      */
-    void removeMeeting(Meeting meeting);
+    void deleteMeeting(Meeting meeting);
 
     /**
-     * Recover the collaborator List
+     * Filter meetings by date
+     *
+     * @param date
      */
-    List<String> getCollaboratorList();
+    List<Meeting> getMeetingListByDate(Date date);
+
+    /**
+     * Filter meetings by room
+     *
+     * @param roomName
+     */
+    List<Meeting> getMeetingListByRoom(String roomName);
+
+    /**
+     * Recover the dummy collaborator List
+     */
+    List<String> getDummyCollaboratorList();
+
+    /**
+     * Recover the dummy duration List
+     */
+    List<String> getDummyDurationList();
 }

@@ -1,38 +1,36 @@
 package com.anne.linger.mareu.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 /**
-*Created by Anne Linger on 20/12/2021.
-*/
+ * Model class for a meeting
+ */
 public class Meeting {
-    private int id;
+    private String name;
     private Room room;
-    private LocalDateTime date;
-    private String startTime;
-    private String endTime;
-    private String topic;
+    private Date date;
+    private String time;
+    private String duration;
     private List<String> collaborators;
+    private String topic;
 
-    public Meeting(int id, Room room, LocalDateTime date, String startTime, String endTime, String topic, List<String> collaborators) {
-        this.id = id;
+    public Meeting(String name, Room room, Date date, String time, String duration, List<String> collaborators, String topic) {
+        this.name = name;
         this.room = room;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.topic = topic;
+        this.time = time;
+        this.duration = duration;
         this.collaborators = collaborators;
+        this.topic = topic;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Room getRoom() {
@@ -43,36 +41,28 @@ public class Meeting {
         this.room = room;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public List<String> getCollaborators() {
@@ -81,5 +71,13 @@ public class Meeting {
 
     public void setCollaborators(List<String> collaborators) {
         this.collaborators = collaborators;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

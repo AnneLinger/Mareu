@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vertical_margin">8dp</dimen>
+    <dimen name="vertical_margin_land">8dp</dimen>
+    <dimen name="horizontal_margin">32dp</dimen>
+    <dimen name="horizontal_margin_land">32dp</dimen>
+    <dimen name="top_margin">32dp</dimen>
+    <dimen name="top_margin_land">32dp</dimen>
+    <dimen name="bottom_margin">32dp</dimen>
+    <dimen name="left_margin">32dp</dimen>
+    <dimen name="right_margin">32dp</dimen>
+    <dimen name="item_margin">60dp</dimen>
+    <dimen name="item_height">8dp</dimen>
+    <dimen name="text_size">14sp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="size_image">24dp</dimen>
+    <dimen name="min_width_date">192dp</dimen>
+    <dimen name="min_width_time">96dp</dimen>
+    <dimen name="max_width_date">256dp</dimen>
+    <dimen name="max_width_time">192dp</dimen>
+    <dimen name="min_width_collaborator">256dp</dimen>
+    <dimen name="max_width_collaborator">352dp</dimen>
+    <dimen name="min_width_room_land">192dp</dimen>
+    <dimen name="max_width_room_land">256dp</dimen>
+    <dimen name="min_width_date_land">160dp</dimen>
+    <dimen name="max_width_date_land">192dp</dimen>
+</resources>
