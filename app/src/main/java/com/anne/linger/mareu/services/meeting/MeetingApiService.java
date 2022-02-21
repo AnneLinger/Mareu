@@ -49,7 +49,7 @@ public interface MeetingApiService {
     List<String> getDummyCollaboratorList();
 
     /**
-     * Recover the dummy duration List
+     * Recover the dummy time List
      */
-    List<String> getDummyDurationList();
+    List<String> getDummyTimeList();
 }

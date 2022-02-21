@@ -62,53 +62,6 @@ public class ManageAddMeeting extends AppCompatActivity {
         });
     }
 
-    //Listener on the time EditText to check the time format
-    public void checkTheTimeFormat(EditText editText, TextInputLayout textInputLayout) {
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!editText.getText().toString().matches("[0-9]{2}[:][0-9]{2}")) {
-                    editText.setError("Veuillez entrer un format HH:MM");
-                } else {
-                    textInputLayout.setErrorEnabled(false);
-                }
-            }
-        });
-    }
-
-    //Listener on time or date EditText to enable the room button
-    public void enableTheRoomSelection(EditText editText, EditText editTextDate, EditText editTextTime, Button button, List<Room> list) {
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editTextDate.getText().toString().isEmpty() ||
-                        editTextTime.getText().toString().isEmpty() || list.isEmpty()) {
-                    button.setEnabled(false);
-                } else {
-                    button.setEnabled(true);
-                }
-            }
-        });
-    }
-
     //Select rooms which are opened according to date and time meeting
     public void checkOpenedRooms(Date date, String time, List<Room> list) {
         for (Meeting meeting : mApiService.getMeetingList()) {
@@ -136,29 +89,6 @@ public class ManageAddMeeting extends AppCompatActivity {
                 Menu menu = mPopupUtils.createMenu(popupMenu);
                 for (Room room : list) {
                     menu.add(room.getName());
-                }
-                popupMenu.show();
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        button.setText(menuItem.getTitle());
-                        return true;
-                    }
-                });
-            }
-        });
-    }
-
-    //Listener to select a duration
-    public void chooseADuration(Button button, List<String> list) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = mPopupUtils.createPopupMenu(button.getContext(), button);
-                Menu menu = mPopupUtils.createMenu(popupMenu);
-                for (String string : list) {
-                    menu.add(string);
                 }
                 popupMenu.show();
 

@@ -11,7 +11,6 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static com.anne.linger.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.notNullValue;
 
-import android.content.res.Resources;
 import android.widget.DatePicker;
 
 import androidx.test.core.app.ActivityScenario;
@@ -50,7 +49,7 @@ public class MeetingInstrumentedTest {
     private final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
 
     private final List<String> mCollaboratorList = Arrays.asList("test@lamzone.com", "test2@lamzone.com");
-    private final Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", "1 heure", mCollaboratorList, "Test");
+    private final Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", mCollaboratorList, "Test");
 
     @Rule
     public ActivityScenarioRule<MeetingActivity> mActivityScenarioRule = new ActivityScenarioRule<>(MeetingActivity.class);
