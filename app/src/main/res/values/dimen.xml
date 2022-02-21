@@ -24,4 +24,5 @@
     <dimen name="max_width_room_land">256dp</dimen>
     <dimen name="min_width_date_land">160dp</dimen>
     <dimen name="max_width_date_land">192dp</dimen>
+    <dimen name="width_room_land">0dp</dimen>
 </resources>

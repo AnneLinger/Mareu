@@ -80,7 +80,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tf_date"
             app:layout_constraintStart_toEndOf="@id/tf_date"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/tf_date"
+            app:layout_constraintTop_toTopOf="@id/tf_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
