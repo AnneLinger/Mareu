@@ -28,7 +28,7 @@ public class MeetingUnitTest {
     private final RoomApiService mRoomApiService = DIRoom.getNewInstanceRoomApiService();
 
     private final List<String> mCollaboratorList = Arrays.asList("test@lamzone.com", "test2@lamzone.com");
-    private final Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", "1 heure", mCollaboratorList, "Test");
+    private final Meeting mMeetingTest = new Meeting("Réunion test", mRoomApiService.getRoomList().get(0), Calendar.getInstance().getTime(), "14:00", mCollaboratorList, "Test");
 
     @Before
     public void setup() {

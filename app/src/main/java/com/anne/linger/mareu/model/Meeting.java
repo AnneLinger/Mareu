@@ -11,16 +11,14 @@ public class Meeting {
     private Room room;
     private Date date;
     private String time;
-    private String duration;
     private List<String> collaborators;
     private String topic;
 
-    public Meeting(String name, Room room, Date date, String time, String duration, List<String> collaborators, String topic) {
+    public Meeting(String name, Room room, Date date, String time, List<String> collaborators, String topic) {
         this.name = name;
         this.room = room;
         this.date = date;
         this.time = time;
-        this.duration = duration;
         this.collaborators = collaborators;
         this.topic = topic;
     }
@@ -55,14 +53,6 @@ public class Meeting {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public List<String> getCollaborators() {

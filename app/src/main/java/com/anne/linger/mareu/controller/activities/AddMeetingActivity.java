@@ -2,12 +2,13 @@ package com.anne.linger.mareu.controller.activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,9 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.PopupMenu;
 
 import com.anne.linger.mareu.R;
 import com.anne.linger.mareu.controller.manager.ManageAddMeeting;
@@ -29,6 +28,7 @@ import com.anne.linger.mareu.model.Room;
 import com.anne.linger.mareu.services.meeting.MeetingApiService;
 import com.anne.linger.mareu.services.room.RoomApiService;
 import com.anne.linger.mareu.utils.DateTimeUtils;
+import com.anne.linger.mareu.utils.PopupUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,15 +47,13 @@ public class AddMeetingActivity extends ManageAddMeeting {
     private static final RoomApiService mRoomApiService = DIRoom.getRoomApiService();
     private static final ManageAddMeeting mManageAddMeeting = new ManageAddMeeting();
     private static final DateTimeUtils mDateTimeUtils = new DateTimeUtils();
+    private static final PopupUtils mPopupUtils = new PopupUtils();
     private int lastSelectedYear;
     private int lastSelectedMonth;
     private int lastSelectedDay;
-    private final boolean is24HView = true;
-    private int lastSelectedHour;
-    private int lastSelectedMinute;
     public Date date;
     private String time;
-    private final List<String> durationList = mApiService.getDummyDurationList();
+    private final List<String> timeList = mApiService.getDummyTimeList();
     private final List<Room> openedRooms = mRoomApiService.getRoomList();
     private Room room;
     private final List<String> collaboratorList = new ArrayList<>();
@@ -66,10 +64,8 @@ public class AddMeetingActivity extends ManageAddMeeting {
         initUi();
         selectDate();
         saveTheDate();
-        selectTime();
         saveTheTime();
         selectARoom();
-        selectADuration();
         configureAutoCompleteCollaborator();
         addCollaborator();
         addTopic();
@@ -122,7 +118,7 @@ public class AddMeetingActivity extends ManageAddMeeting {
             }
         });
 
-        //Get current date
+        //Get the current date
         final Calendar calendar = Calendar.getInstance();
         this.lastSelectedYear = calendar.get(Calendar.YEAR);
         this.lastSelectedMonth = calendar.get(Calendar.MONTH);
@@ -149,67 +145,66 @@ public class AddMeetingActivity extends ManageAddMeeting {
                 lastSelectedDay = dayOfMonth;
             }
         };
-        DatePickerDialog datePickerDialog = null;
+        DatePickerDialog datePickerDialog;
         datePickerDialog = new DatePickerDialog(this, dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDay);
         datePickerDialog.show();
     }
 
-    //Display the date in the EditText to save it
-    private void saveTheDate() {
-        mManageAddMeeting.checkTheDateFormat(mBinding.etDate, mBinding.tfDate);
-        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms);
-        mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
-        mManageAddMeeting.enableTheRoomSelection(mBinding.etDate, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
-        enableButtonSave();
-    }
-
-    //Select the time in the TimePickerDialog
-    private void selectTime() {
-        mBinding.tfTime.setStartIconOnClickListener(new View.OnClickListener() {
+    //Save the date
+    public void saveTheDate() {
+        mBinding.etDate.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                configureTimePickerDialog();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                mManageAddMeeting.checkTheDateFormat(mBinding.etDate, mBinding.tfDate);
+                mManageAddMeeting.checkOpenedRooms(date, time, openedRooms);
+                mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
+                mBinding.buttonRooms.setEnabled(!mBinding.etDate.getText().toString().isEmpty() &&
+                        !mBinding.buttonTime.getText().toString().contains("Heure") && !openedRooms.isEmpty());
             }
         });
     }
 
-    //Configure the TimePickerDialog
-    private void configureTimePickerDialog() {
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                Date dateTime = mDateTimeUtils.getTimeFromTimePicker(timePicker);
-                SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-                String result = formatter.format(dateTime);
-                time = result;
-                mBinding.etTime.setText(result);
-                mBinding.tfTime.setErrorEnabled(false);
-                lastSelectedHour = hourOfDay;
-                lastSelectedMinute = minute;
-            }
-        };
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeSetListener, lastSelectedHour, lastSelectedMinute, is24HView);
-        timePickerDialog.show();
-    }
-
-    //Save the chosen time
+    //Save the time
     private void saveTheTime() {
-        mManageAddMeeting.checkTheTimeFormat(mBinding.etTime, mBinding.tfTime);
-        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms);
-        mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
-        mManageAddMeeting.enableTheRoomSelection(mBinding.etTime, mBinding.etDate, mBinding.etTime, mBinding.buttonRooms, openedRooms);
-        enableButtonSave();
+        assert mBinding.buttonTime != null;
+        mBinding.buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = mPopupUtils.createPopupMenu(mBinding.buttonTime.getContext(), mBinding.buttonTime);
+                Menu menu = mPopupUtils.createMenu(popupMenu);
+                for (String time : timeList) {
+                    menu.add(time);
+                }
+                popupMenu.show();
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        mBinding.buttonTime.setText(menuItem.getTitle());
+                        time = mBinding.buttonTime.getText().toString();
+                        mManageAddMeeting.checkOpenedRooms(date, time, openedRooms);
+                        mManageAddMeeting.allRoomsReserved(openedRooms, AddMeetingActivity.this);
+                        mBinding.buttonRooms.setEnabled(!mBinding.etDate.getText().toString().isEmpty() &&
+                                !mBinding.buttonTime.getText().toString().contains("Heure") && !openedRooms.isEmpty());
+                        enableButtonSave();
+                        return true;
+                    }
+                });
+            }
+        });
     }
 
     //Select a room
     private void selectARoom() {
         mManageAddMeeting.selectARoom(mBinding.buttonRooms, openedRooms);
-        enableButtonSave();
-    }
-
-    //Select a duration
-    private void selectADuration() {
-        mManageAddMeeting.chooseADuration(mBinding.buttonDuration, durationList);
         enableButtonSave();
     }
 
@@ -249,8 +244,7 @@ public class AddMeetingActivity extends ManageAddMeeting {
     //The button save is enabled only when all fields are filled
     private void enableButtonSave() {
         if (mBinding.etDate.getText().toString().isEmpty() ||
-                mBinding.etTime.getText().toString().isEmpty() ||
-                mBinding.buttonDuration.getText().toString().contains(getString(R.string.check_duration_button)) ||
+                mBinding.buttonTime.getText().toString().contains(getString(R.string.time)) ||
                 mBinding.buttonRooms.getText().toString().contains(getString(R.string.check_room_button)) ||
                 mBinding.chipGroup.getChildCount() < 2 ||
                 mBinding.etTopic.getText().toString().isEmpty()) {
@@ -271,13 +265,11 @@ public class AddMeetingActivity extends ManageAddMeeting {
                         room = mRoom;
                     }
                 }
-                //manageAddMeeting.saveTheRoom(openedRooms, mBinding.buttonRooms, room);
                 Meeting meeting = new Meeting(
                         getString(R.string.meeting_name) + (mApiService.getMeetingList().size() + 1),
                         room,
                         date,
                         time,
-                        mBinding.buttonDuration.getText().toString(),
                         collaboratorList,
                         mBinding.etTopic.getText().toString()
                 );

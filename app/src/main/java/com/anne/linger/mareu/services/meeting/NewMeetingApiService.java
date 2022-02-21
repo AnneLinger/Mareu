@@ -13,7 +13,7 @@ public class NewMeetingApiService implements MeetingApiService {
 
     public final List<Meeting> meetingList = new ArrayList();
     public final List<String> dummyCollaboratorList = DummyCollaboratorGenerator.generateCollaborators();
-    public final List<String> dummyDurationList = DummyDurationGenerator.generateDurations();
+    public final List<String> dummyTimeList = DummyTimeGenerator.generateTimes();
 
     @Override
     public List<Meeting> getMeetingList() {
@@ -56,7 +56,7 @@ public class NewMeetingApiService implements MeetingApiService {
     }
 
     @Override
-    public List<String> getDummyDurationList() {
-        return dummyDurationList;
+    public List<String> getDummyTimeList() {
+        return dummyTimeList;
     }
 }

@@ -45,8 +45,8 @@
             android:maxWidth="@dimen/max_width_date"
             android:minWidth="@dimen/min_width_date"
             app:endIconMode="custom"
-            app:layout_constraintEnd_toStartOf="@id/tf_time"
-            app:layout_constraintRight_toLeftOf="@id/tf_time"
+            app:layout_constraintEnd_toStartOf="@id/button_time"
+            app:layout_constraintRight_toLeftOf="@id/button_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:startIconContentDescription="@string/calendar"
@@ -63,34 +63,25 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tf_time"
+        <Button
+            android:id="@+id/button_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/lightgrey"
-            android:hint="@string/time"
+            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+            android:text="@string/time"
+            android:textAllCaps="false"
             android:maxWidth="@dimen/max_width_time"
             android:minWidth="@dimen/min_width_time"
-            app:errorEnabled="false"
+            android:textSize="@dimen/text_size"
+            android:theme="@style/AppTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tf_date"
             app:layout_constraintStart_toEndOf="@id/tf_date"
-            app:layout_constraintTop_toTopOf="parent"
-            app:startIconContentDescription="@string/timer"
-            app:startIconDrawable="@drawable/ic_baseline_access_time_24"
-            app:startIconTint="@color/blue">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="datetime"
-                android:textSize="@dimen/text_size" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintBottom_toBottomOf="@id/tf_date"
+            app:layout_constraintTop_toTopOf="@id/tf_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -106,27 +97,10 @@
         android:textAllCaps="false"
         android:textSize="@dimen/text_size"
         android:theme="@style/AppTheme"
-        app:layout_constraintBottom_toTopOf="@+id/button_duration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_time" />
-
-    <Button
-        android:id="@+id/button_duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin"
-        android:background="@color/lightgrey"
-        android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
-        android:text="@string/duration"
-        android:textAllCaps="false"
-        android:textSize="@dimen/text_size"
-        android:theme="@style/AppTheme"
         app:layout_constraintBottom_toTopOf="@+id/tf_collaborators"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_rooms" />
+        app:layout_constraintTop_toBottomOf="@id/cl_time" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_collaborators"
@@ -142,7 +116,7 @@
         app:layout_constraintBottom_toTopOf="@+id/chip_group"
         app:layout_constraintEnd_toStartOf="@id/bt_save_collaborator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_duration">
+        app:layout_constraintTop_toBottomOf="@id/button_rooms">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/et_enter"

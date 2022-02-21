@@ -21,7 +21,7 @@ public class DeleteViewAction implements ViewAction {
 
     @Override
     public String getDescription() {
-        return Resources.getSystem().getString(R.string.delete_description);
+        return "Click on specific button";
     }
 
     @Override
