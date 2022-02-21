@@ -51,7 +51,7 @@ To deploy this project run
 
 ## Screenshots
 
-<img src="https://github.com/AnneLinger/Mareu/blob/704507368ad5709c7c3e4bdb870dacf05b992e53/img/Screenshot%202022-02-11%20085934.png" alt="Main activity" width="300"/>&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/AnneLinger/Mareu/blob/454f38cd3ee23ffca57930ce20f0c91989c8b231/img/Screenshot%202022-02-21%20102841.png"/>
+<img src="https://github.com/AnneLinger/Mareu/blob/704507368ad5709c7c3e4bdb870dacf05b992e53/img/Screenshot%202022-02-11%20085934.png" alt="Main activity" width="300"/>&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/AnneLinger/Mareu/blob/454f38cd3ee23ffca57930ce20f0c91989c8b231/img/Screenshot%202022-02-21%20102841.png" alt="Add a meeting activity" width="300"/>
 
 <img src="https://github.com/AnneLinger/Mareu/blob/0cea5f211d446fb102b292b543e40f9fafcce699/img/Screenshot%202022-02-11%20091301.png" alt="Meeting list - Landscape" width="600"/>
 
